@@ -9,10 +9,12 @@ import { PartnersComponent } from './pages/partners/partners.component';
 import { ResourcesComponent } from './pages/resources/resources.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
+import { AuthenticationGuard } from 'src/app/shared/guards/authentication.guard';
 
 const routes: Routes = [
-    {   path: 'admin', component: AdminComponent,
+    {   path: 'admin', component: AdminComponent,canActivateChild:[AuthenticationGuard],
         children :[
+            { path: '', redirectTo: 'dashboard',pathMatch: 'full'},
             { path: 'dashboard', component: AdminDashboardComponent},
             { path: 'users', component: UsersComponent },
             { path: 'parners', component: PartnersComponent},

@@ -1,0 +1,21 @@
+<ul class="pagination pagination-lg justify-content-center">
+  <li class="page-item">
+    <button 
+    aria-label="Go To Previous Page"
+    [attr.aria-disabled]="current === 1" 
+    [disabled]="current === 1" 
+    (click)="onPrevious()">
+          Previous
+     </button>
+  </li>
+  <li class="page-item"><span> {{current}} </span></li>
+  <li class="page-item">
+      <button 
+      aria-label="Go To Next Page" 
+      [attr.aria-disabled]="current === total" 
+      [disabled]="current === total" 
+      (click)="onNext()">
+      Next
+      </button>
+  </li>
+</ul>

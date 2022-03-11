@@ -1,0 +1,52 @@
+
+/***************Login***********************/
+
+.ax_login_row {
+    margin: 10px auto 0 auto; 
+}
+
+.ax_login_container_logo {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.ax_login_content_logo {
+    margin: 0 auto; 
+    padding: 0;
+}
+
+.ax_login_app_logo {
+    margin: 0; 
+    padding: 0;
+    width: 30px;
+}
+
+.ax_login_app_name {
+    position: relative;
+    top: -3px;
+    margin-left: 10px;
+    font-size: 30px;
+    vertical-align: middle;
+}
+
+.ax_login_error_messages {
+    width: 100%; 
+    text-align: left; 
+}
+
+.ax_login_container_field_label {
+    border: none;
+}
+
+.ax_login_container_field_input {
+    margin: 0;
+}
+
+.ax_login_result_message_default {
+    color: #17a2b8;
+}
+
+.ax_login_result_message_fail, .ax_login_result_message_fail p{
+    color: #df7008;
+}
+.ax_login_result_message_fail p{margin:0}

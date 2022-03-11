@@ -1,0 +1,224 @@
+/* HEADER */
+.ax_header {
+    padding: 5px 0;
+    width: 100%;
+    display: block;
+    position: fixed;
+    top: 0;
+    background-color: rgba(37, 43, 48, 0.5);
+    z-index: 30;
+
+    box-shadow: -1px 7px 63px 11px rgba(0,0,0,0.7);
+    -webkit-box-shadow: -1px 7px 63px 11px rgba(0,0,0,0.7);
+    -moz-box-shadow: -1px 7px 63px 11px rgba(0,0,0,0.7);
+}
+
+.ax_header_container {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 75px;
+}
+
+.ax_header_app_icon {
+    height: 16px;
+    vertical-align: middle;
+}
+
+.ax_header_app_name {
+    margin-left: 3px;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+
+/***********************Navigation******************************/
+
+.axpp_nav_logo_ax_x {
+    margin: 10px 10px 25px 38px; 
+    padding: 0;
+    width: 30px;
+    display: block;
+    clear: both;
+}
+
+.img {
+    page-break-inside: avoid; 
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    vertical-align: middle;
+    border-style: none;
+}
+
+.profile_pic {
+    display: block;
+    width: 75px;
+    height: 75px;
+    margin: 0 auto;
+}
+
+.rounded-circle {
+    border-radius: 50% !important; 
+}
+
+.mb-5 {
+  margin-bottom: 3rem !important; 
+}
+
+.user_greeting {
+    font-size: 16px;
+    font-weight: bold;
+    color: #606669;
+}
+
+.user_btn {
+    font-size: 14px;
+    color: #606669;
+}
+
+.user_btn:hover {
+    color: #f8b739;
+    text-decoration: none;;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px; /* margin-left retrived by js for 'closed width'. */
+}
+
+#sidenav {
+    height: 100%;
+    width: 270px;
+    position: fixed;
+    z-index: 50;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    transition: 0.3s;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+
+    box-shadow: 28px 1px 146px -10px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 28px 1px 146px -10px rgba(0,0,0,0.6);
+    -moz-box-shadow: 28px 1px 146px -10px rgba(0,0,0,0.6);
+}
+
+#sidenav::-webkit-scrollbar {
+    display: none;
+}
+
+#sidenav {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+#sidenav ul li {
+    font-size: 16px; 
+
+    padding: 3px 8px 3px 20px;
+    text-decoration: none;
+}
+
+#sidenav ul li > ul {
+    margin-left: 10px; 
+}
+
+#sidenav ul li > ul li {
+    font-size: 14px; 
+}
+
+#sidenav ul li a {
+    padding: 5px 0;
+    display: block;
+    color: #606669;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    transition: color 0.5s ease 0.01s;
+}
+
+#sidenav ul li a:hover {
+    color: #f8b739; 
+    text-decoration: none;
+}
+
+#sidenav ul li.active > a {
+    background: transparent;
+    color: #f8b739; 
+}
+
+a[data-toggle="collapse"] {
+    position: relative; 
+}
+  
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); 
+}
+
+.dropdown-toggle {
+    white-space: nowrap; 
+}
+    
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent; 
+}
+
+.dropdown-toggle:empty::after {
+    margin-left: 0;
+}
+
+.dropdown-toggle.hide-pseudo::after {
+    visibility: hidden;
+}
+
+.axpp_icon {
+    margin-right: 20px;
+    text-align: center;
+    width: 5px;
+}
+
+.axpp_nav_header {
+    margin: 0 10px 25px 10px; 
+    padding: 10px 0;
+}
+
+.axpp_nav_header_pic {
+    padding: 0; 
+}
+
+.axpp_nav_header_details {
+    border: none;
+}
+
+.axpp_nav_section {
+    margin: 0 0 0 20px;
+    font-weight: bold;
+    font-size: large;
+
+    white-space: nowrap; 
+}
+
+.hidden_element {
+    display: none;
+}

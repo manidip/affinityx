@@ -1,0 +1,27 @@
+/*********************Pagination************************/
+
+.pagination .page-item button,.pagination .page-item span{
+  color: #ffc107;
+  background-color: #1f2327;
+  border: 1px solid #262a3b;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  display: block;
+  outline: none;
+}
+
+.pagination .page-item button:hover{
+  color: #ba8b00;
+}
+.pagination .page-item button:disabled,.pagination .page-item button:disabled:hover{
+  color: #6c7075;
+}
+
+.pagination .page-item span {
+  background-color: #dfa908;
+  cursor: default;
+  color: #000;
+  font-weight: bold;
+}
+
