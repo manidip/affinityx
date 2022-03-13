@@ -90,7 +90,8 @@ export class DocumentsComponent implements OnInit {
     this.getDocuments({page:this.current});
   }
 
-  public async getDocuments(options?: any){
+  public async getDocuments(options?: any) {
+    this.documents = [];
     return this.documentService.getAll({...this.filterForm.value,per_page:this.perPage,...options}).subscribe(response => {
       let pageCount = response.headers.get('X-WP-TotalPages');
       this.total = Number(pageCount);

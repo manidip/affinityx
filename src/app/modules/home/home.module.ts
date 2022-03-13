@@ -8,6 +8,8 @@ import { HomeComponent } from './pages/home.component';
 import { NgSelect2Module } from 'ng-select2';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AddDocumentComponent } from './pages/documents/add-document/add-document.component';
+import { ViewDocumentComponent } from './pages/documents/view-document/view-document.component';
 
 
 @NgModule({
@@ -15,6 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     DocumentsComponent,
     HomeComponent,
+    AddDocumentComponent,
+    ViewDocumentComponent,
   ],
   imports: [
     CommonModule,
