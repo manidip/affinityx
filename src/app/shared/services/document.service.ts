@@ -17,8 +17,38 @@ export class DocumentService {
     return this.http.get<any>(`${environment.apiUrl}/wp/v2/documents`,{ params: {...options},observe: "response" })
   }
 
-  getById(id: number) {
-      return this.http.get<any>(`${environment.apiUrl}/wp/v2/documents/${id}`);
+  getById(options:any) {
+      let id = options.id;
+      delete options['id'];
+      return this.http.get<any>(`${environment.apiUrl}/wp/v2/documents/${id}`,{observe: "response" });
+  }
+  getBySlug(options:any) {
+    return this.http.get<any>(`${environment.apiUrl}/wp/v2/documents/`,{ params: {...options},observe: "response" });
+  }
+
+  getBy(options:any) {
+    let post = options['post'];
+    delete options['post'];
+    if(Number.isInteger(post)) return this.getById({id:post,...options});
+    else return this.getBySlug({slug:post,...options});
+  }
+
+  insert_or_update(data:any,id:Number | string){
+    if(Number.isInteger(id)){
+      return this.update(data,id)
+    }else{
+      return this.insert(data)
+    }
+  }
+
+  insert(data:any){
+    return this.http.post<any>(`${environment.apiUrl}/wp/v2/documents/`,data);
+  }
+  update(data:any,id:Number | string){
+    return this.http.post<any>(`${environment.apiUrl}/wp/v2/documents/${id}`,data);
+  }
+  delete(item:any){
+    return this.http.delete<any>(`${environment.apiUrl}/wp/v2/documents/${item.id}`);
   }
 
 }

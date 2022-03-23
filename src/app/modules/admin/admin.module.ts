@@ -2,23 +2,34 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminComponent,AdminDashboardComponent,UsersComponent,PartnersComponent,ResourcesComponent,ProductsComponent,DocumentsComponent } from './pages';
-
-
+import { NgSelect2Module } from 'ng-select2';
+import { SharedModule } from '../../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { 
+  AdminComponent,DashboardComponent,DocumentsComponent, 
+  AddDocumentComponent,ViewDocumentComponent,
+  ProductsComponent,ResourcesComponent,PartnersComponent,
+  UsersComponent
+} from './pages';
 
 @NgModule({
   declarations: [
-    AdminDashboardComponent,
+    DashboardComponent,
+    DocumentsComponent,
+    AdminComponent,
+    AddDocumentComponent,
+    ViewDocumentComponent,
     UsersComponent,
     PartnersComponent,
     ResourcesComponent,
     ProductsComponent,
-    DocumentsComponent,
-    AdminComponent
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    NgSelect2Module,
+    AdminRoutingModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class AdminModule { }

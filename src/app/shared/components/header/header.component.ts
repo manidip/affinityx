@@ -19,9 +19,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  logout(): void {
+  logout($event): void {
+    $event.stopPropagation();$event.preventDefault()
     this.tokenStorageService.logout();
-    //this.router.navigate(['/login']);
-}
+    this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.routerState.snapshot.url }});
+ }
 
 }

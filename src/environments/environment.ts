@@ -7,7 +7,7 @@ import {SnotifyPosition} from 'ng-snotify';
 export const environment = {
   production: false,
   apiUrl: 'https://affinityx.dev-ss-pro.com/api',
-  documentsPerPage : 3,
+  documentsPerPage : 10,
   productsPerPage : 99,
   defaultPerPage : 99,
   toastConfig: {

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import {Router , ActivatedRoute} from '@angular/router';
+import { TokenStorageService } from './modules/authentication/services/token-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'affinityx';
+
+  constructor( private activeRoute:ActivatedRoute, private router: Router, private titleService: Title,private tokenStorageService: TokenStorageService) { 
+     this.titleService.setTitle('Affinityx');
+  }
+
+  ngOnInit() {  
+    
+  }  
+  
 }

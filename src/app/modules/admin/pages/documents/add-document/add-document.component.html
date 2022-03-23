@@ -1,0 +1,171 @@
+<app-in-page-header title="Manage Documents" group="Tools" [links]="headerLinks"></app-in-page-header>
+<app-header-title [title]="pageTitle"></app-header-title>
+<form action="" method="POST" name="document-form" style="display: inline;" enctype="multipart/form-data" id="document-form" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+	<input type="hidden" name="action" value="">
+	<input type="hidden" name="update_id" value="">
+	<div class="row" >
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="form-check-label test-border-yellow">Document Name</label>: <span class="ax_field_required"></span></div>
+		    <div class="col-md-7 ax_form_column ax_form_column_border_right">
+			<input formControlName="title" type="text" class="form-control ax_text_input" value="" autocomplete="off"> 
+            <!-- <span class="ax_form_result_message_fail" *ngIf="createFormControls['title'].dirty && !createFormControls['title']['valid']">Found</span> -->
+        </div>
+		<!-- ---------- ---------- ---------- -->
+		<div class="col-md-3 ax_form_column"> Please type document name</div>
+	</div>
+	<div class="row" >
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="form-check-label test-border-yellow">Partners</label>: <span class="ax_field_required"></span></div>
+		<!-- ---------- ---------- ---------- -->
+		<div class="col-md-7 ax_form_column ax_form_column_border_right">
+			<div class="ax_multicheckbox">
+				<ng-container  formArrayName="partners" *ngFor="let partner of partners;let i = index;">
+                    <label class="form-check-label ax_multicheckbox_value_option_label">
+                        <input type="checkbox"  class="custom-control-input" [formControlName]="i">
+                        {{partners[i]?.title}}
+                    </label>
+                </ng-container>
+			</div>
+		</div>
+		<!-- ---------- ---------- ---------- -->
+		<div class="col-md-3 ax_form_column">Select at least one partner.
+			<div class="ax_multicheckbox select_all">
+				<label class="form-check-label ax_multicheckbox_value_option_label">
+					<input (change)="selectAll('partners')" type="checkbox" name="select_all" class="select_all_input custom-control-input" value=""> Select All 
+                </label>
+			</div>
+		</div>
+	</div>
+	<!-- ---------- ---------- ---------- ---------- ---------- -->
+	<div class="row" >
+		<!-- [Text] Username -->
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="form-check-label test-border-yellow">Products</label>: <span class="ax_field_required"></span></div>
+		<!-- ---------- ---------- ---------- -->
+		<div class="col-md-7 ax_form_column ax_form_column_border_right">
+            <div class="ax_multicheckbox">
+				<ng-container formArrayName="products" *ngFor="let product of products;let i = index;">
+                    <label class="form-check-label ax_multicheckbox_value_option_label">
+                        <input type="checkbox" [id]="product.id" [formControlName]="i" class="custom-control-input" >
+                        {{product.title}}
+                    </label>
+                </ng-container>
+			</div>
+		</div>
+		<!-- ---------- ---------- ---------- -->
+		<div class="col-md-3 ax_form_column">Select at least one product.
+			<div class="ax_multicheckbox select_all">
+				<label class="form-check-label ax_multicheckbox_value_option_label" id="label_select_all_product">
+					<input type="checkbox" (change)="selectAll('products')" name="select_all" class="select_all_input custom-control-input" value=""> Select All </label>
+			</div>
+		</div>
+	</div>
+	<!-- ---------- ---------- ---------- ---------- ---------- -->
+	<div class="row" >
+		<!-- [Text] Username -->
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="form-check-label test-border-yellow">Resources</label>: <span class="ax_field_required"></span>
+        </div>
+		<!-- ---------- ---------- ---------- -->
+		<div class="col-md-7 ax_form_column ax_form_column_border_right">
+			<div class="ax_multicheckbox">
+				<ng-container formArrayName="resources" *ngFor="let resource of resources;let i = index;">
+                    <label class="form-check-label ax_multicheckbox_value_option_label">
+                        <input type="checkbox" class="custom-control-input" [formControlName]="i">
+                        {{resource?.title}}
+                    </label>
+                </ng-container>
+			</div>
+		</div>
+		<!-- ---------- ---------- ---------- -->
+		<div class="col-md-3 ax_form_column">Select at least one resource category.
+			<div class="ax_multicheckbox select_all">
+				<label class="form-check-label ax_multicheckbox_value_option_label">
+					<input type="checkbox" (change)="selectAll('resources')" name="select_all" class="select_all_input custom-control-input" value=""> Select All </label>
+			</div>
+		</div>
+	</div>
+	<!-- ---------- ---------- ---------- ---------- ---------- -->
+	<div class="row" >
+		<!-- [Text] Username -->
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="form-check-label test-border-yellow" for="fieldset_document_recommendation_group">Industry Verticals</label>: <span class="ax_field_required"></span></div>
+		<!-- ---------- ---------- ---------- -->
+		<div class="col-md-7 ax_form_column ax_form_column_border_right">
+            <div class="ax_multicheckbox">
+				<ng-container formArrayName="industry_verticals" *ngFor="let industryVertical of industry_verticals;let i = index;">
+                    <label class="form-check-label ax_multicheckbox_value_option_label" >
+                        <input type="checkbox" class="custom-control-input" [formControlName]="i">
+                        {{industryVertical?.title}}
+                    </label>
+                </ng-container>
+			</div>
+		</div>
+		<!-- ---------- ---------- ---------- -->
+		<div class="col-md-3 ax_form_column">Select at least one Industry Vertical.</div>
+	</div>
+	<div class="row" >
+		<div class="col-md-2 ax_form_column ax_form_column_border_right"><span class="ax_text_input_label">Type</span>: <span class="ax_field_required"></span></div>
+		<div class="col-md-7 ax_form_column ax_form_column_border_right">
+            <div class="ax_multicheckbox">
+                <!-- <label class="form-check-label ax_multicheckbox_value_option_label">
+                <input type="radio" name="doc_type"  class="custom-control-input" value="ppt">PPT </label> -->
+                
+                <ng-container formArrayName="docType" *ngFor="let docType of docTypes;let i = index;">
+                    <label class="form-check-label ax_multicheckbox_value_option_label" >
+                        <input type="checkbox" class="custom-control-input" [formControlName]="i">
+                        {{docType}}
+                    </label>
+                </ng-container> 
+                <!-- <label class="form-check-label ax_multicheckbox_value_option_label" >
+                <input type="radio" name="doc_type" class="custom-control-input" value="doc">DOC </label>
+                
+                <label class="form-check-label ax_multicheckbox_value_option_label">
+                <input type="radio" name="doc_type"  class="custom-control-input" value="xls">XLS </label>
+                
+                <label class="form-check-label ax_multicheckbox_value_option_label">
+                <input type="radio" name="doc_type"  class="custom-control-input" value="csv">CSV </label>
+                
+                <label class="form-check-label ax_multicheckbox_value_option_label">
+                <input type="radio" name="doc_type"  class="custom-control-input" value="png">PNG </label>
+                
+                <label class="form-check-label ax_multicheckbox_value_option_label">
+                <input type="radio" name="doc_type"  class="custom-control-input" value="jpg">JPG </label>
+                
+                <label class="form-check-label ax_multicheckbox_value_option_label">
+                <input type="radio" name="doc_type"  class="custom-control-input" value="gif">GIF </label>
+                
+                <label class="form-check-label ax_multicheckbox_value_option_label">
+                <input type="radio" name="doc_type"  class="custom-control-input" value="video">VIDEO </label> -->
+        </div>
+		</div>
+		<div class="col-md-3 ax_form_column">Select file type</div>
+	</div>
+	<!-- ---------- ---------- ---------- ---------- ---------- -->
+	<div class="row" >
+		<div class="col-md-2 ax_form_column ax_form_column_border_right"><span class="ax_text_input_label">Files</span>: <span class="ax_field_required"></span></div>
+		<div class="col-md-7 ax_form_column ax_form_column_border_right">
+			<p><a target="_blank" *ngIf="currentProduct" href="{{currentProduct?.file.url}}" download class="btn btn-sm btn-outline-warning" role="button">View File</a></p>
+			<input 
+            type="file" 
+            accept="application/pdf"
+            (change)="onFileChange($event)"
+            class="form-control form-control-sm ax_file_input"> 
+		</div>
+		<!--            application/pdf,application/vnd.ms-excel,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet-->
+		<div class="col-md-3 ax_form_column">
+            Drop or select file(s)
+            <br/> File is required
+			<br/> Max 10MB
+        </div>
+	</div>
+	<!-- ---------- ---------- ---------- ---------- ---------- -->
+
+	<div class="row">
+		<div class="col-md-12" style="margin-top: 10px; text-align: right;">
+			<button [disabled]="!createForm.valid || submitted" type="submit" name="submit" class="btn btn-outline-warning btn-lg">
+				{{editingProduct ? 'Update' : 'Add'}}
+			</button>
+		</div>
+	</div>
+</form>

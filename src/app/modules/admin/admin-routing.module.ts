@@ -1,28 +1,28 @@
-import { AdminComponent } from './pages/admin.component';
-import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-
-import { UsersComponent } from './pages/users/users.component';
-import { PartnersComponent } from './pages/partners/partners.component';
-import { ResourcesComponent } from './pages/resources/resources.component';
-import { ProductsComponent } from './pages/products/products.component';
-import { DocumentsComponent } from './pages/documents/documents.component';
-import { AuthenticationGuard } from 'src/app/shared/guards/authentication.guard';
+import { AuthorizationGuard,AuthenticationGuard } from '../../shared/guards/';
+import { 
+  AdminComponent,DashboardComponent,AddDocumentComponent,
+  ViewDocumentComponent,DocumentsComponent,PartnersComponent, 
+  ProductsComponent,ResourcesComponent,UsersComponent 
+} from './pages';
 
 const routes: Routes = [
-    {   path: 'admin', component: AdminComponent,canActivateChild:[AuthenticationGuard],
-        children :[
-            { path: '', redirectTo: 'dashboard',pathMatch: 'full'},
-            { path: 'dashboard', component: AdminDashboardComponent},
-            { path: 'users', component: UsersComponent },
-            { path: 'parners', component: PartnersComponent},
-            { path: 'resourses', component: ResourcesComponent},
-            { path: 'products', component: ProductsComponent},
-            { path: 'documents', component: DocumentsComponent},
-        ]
-    },
+  { path: 'admin', component: AdminComponent,canActivateChild:[AuthenticationGuard,AuthorizationGuard],
+      children :[
+        {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+        { path: 'dashboard', component: DashboardComponent },
+        { path: 'documents/edit/:id/:slug', component: AddDocumentComponent },
+        { path: 'documents/add', component: AddDocumentComponent },
+        { path: 'documents/:id/:slug', component: ViewDocumentComponent },
+        { path: 'documents', component: DocumentsComponent },
+        { path: 'users', component: UsersComponent },
+        { path: 'partners', component: PartnersComponent},
+        { path: 'resources', component: ResourcesComponent},
+        { path: 'products', component: ProductsComponent},
+      ]
+  },
 ];
 
 @NgModule({

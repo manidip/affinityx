@@ -43,20 +43,20 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  get f() { return this.loginForm.controls; }
+  get loginFormControls() { return this.loginForm.controls; }
 
   onSubmit() {
     
     this.submitted = true;
     if (this.loginForm.invalid) return;
-    let toast = this.snotifyService.info('Logging You in', {...environment.toastConfig});
+    let toast = this.snotifyService.info('Logging you in', {...environment.toastConfig});
     this.authenticationService.login(this.loginForm?.value)
     .pipe(first())
     .subscribe({
       next: (response) => {
         //this.snotifyService.success('Logged in as ' + response.data.displayName, {...environment.toastConfig});
         this.submitted = false;
-        toast.body = 'Logging you as ' + response.data.displayName;
+        toast.body = 'Logging you in as ' + response.data.displayName;
       
         setTimeout(() => {
           this.router.navigate([this.returnUrl]);
@@ -66,10 +66,8 @@ export class LoginComponent implements OnInit {
       error: (err: Error) => {
         toast.config.type = 'error';
         toast.body = 'Invalid Credentials';
-        //this.snotifyService.error('Invalid Credentials', {...environment.toastConfig});
         this.submitted = false;
       },
-      complete: () => console.log('Observer got a complete notification'),
     })
 }
 

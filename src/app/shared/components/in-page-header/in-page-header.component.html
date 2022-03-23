@@ -1,0 +1,10 @@
+<div class="row in-page-header">
+    <div class="col-md-6">
+        <h2 class="axdb_h2"><span class="ax_font_color_5">{{group}}: </span>{{title}} <span class="ax_font_color_5"></span></h2> </div>
+    <div class="col-md-6 in-page-main-nav"> 
+        <ng-container *ngFor = "let link of links;">
+            <a *ngIf="link.hasPermission" [routerLink]="link.url" class="btn btn-sm btn-outline-warning" role="button" target="_self">{{link.title}}</a> 
+        </ng-container>
+    </div>
+</div>
+<br>

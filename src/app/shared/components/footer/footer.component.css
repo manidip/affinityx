@@ -11,7 +11,7 @@
     position: fixed;
     bottom: 0;
     background-color: rgba(37, 43, 48, 1);
-    z-index: 30;
+    z-index: 999;
     box-shadow: -1px 7px 63px 11px rgba(0,0,0,0.7);
     -webkit-box-shadow: -1px 7px 63px 11px rgba(0,0,0,0.7);
     -moz-box-shadow: -1px 7px 63px 11px rgba(0,0,0,0.7);
