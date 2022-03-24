@@ -115,9 +115,16 @@ export class DocumentsComponent implements OnInit {
       {text: 'Yes', action: (toast) => {
         this.spinner.show();
         this.snotifyService.remove(toast.id)
-        this.documentService.delete(item).subscribe(response => {
+        this.documentService.delete(item).subscribe({
+         next:(response) => {
           this.spinner.hide();
           this.getDocuments();
+          this.snotifyService.success(response, {...environment.toastConfig,timeout:1000});
+         }, 
+         error: (response) => {
+          this.spinner.hide();
+          this.snotifyService.error(response, {...environment.toastConfig,timeout:1000});
+         }
         })
       }, bold: false},
       {text: 'No', action: (toast) => {this.snotifyService.remove(toast.id)}},
