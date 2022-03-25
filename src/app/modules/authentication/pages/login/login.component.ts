@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     private snotifyService: SnotifyService,
     ) {
       if (this.tokenStorageService.getUser()) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       }
     }
    
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.loginForm?.value)
     .pipe(first())
     .subscribe({
-      next: (response) => {
+      next: (response:any) => {
         //this.snotifyService.success('Logged in as ' + response.data.displayName, {...environment.toastConfig});
         this.submitted = false;
         toast.body = 'Logging you in as ' + response.data.displayName;

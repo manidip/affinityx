@@ -11,7 +11,7 @@ import { TokenStorageService } from './modules/authentication/services/token-sto
 export class AppComponent {
 
   constructor( private activeRoute:ActivatedRoute, private router: Router, private titleService: Title,private tokenStorageService: TokenStorageService) { 
-     this.titleService.setTitle('Affinityx');
+    this.titleService.setTitle('Affinityx');
   }
 
   ngOnInit() {  

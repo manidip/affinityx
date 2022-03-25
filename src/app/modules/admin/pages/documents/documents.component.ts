@@ -31,7 +31,7 @@ export class DocumentsComponent implements OnInit {
   notFoundMessage = "No Documents Found";
   headerLinks:[{}] = [{}];
 
-  public perPage = environment.documentsPerPage;
+  perPage = environment.documentsPerPage;
 
   public current: number = 1;
   public total: number = 1;

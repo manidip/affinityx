@@ -16,9 +16,13 @@ export class RouteGuard implements CanActivate {
         if(currentuser.isAdmin){
           this.router.navigate(['admin/dashboard'])
         }else{
-          this.router.navigate(['home/dashboard'])
+          this.router.navigate(['user/dashboard'])
         }
+      }else{
+        this.router.navigate(['login'])
       }
+
+      
   
       return false;
   }

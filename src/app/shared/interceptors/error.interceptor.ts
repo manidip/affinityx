@@ -14,8 +14,8 @@ export class ErrorInterceptor implements HttpInterceptor {
 
             if ([401,403].indexOf(err.status) !== -1 && request.url.search('/login/gi') === -1) {
                     // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                    //this.tokenStorageService.logout();
-                    //setTimeout(() => {location.reload();},1500);
+                    this.tokenStorageService.logout();
+                    setTimeout(() => {location.reload();},1500);
             }
 
             const error = err.error.message || err.statusText;

@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductService {
 
-  public perPage = environment.documentsPerPage;
+  public perPage = 9999;
 
   constructor(private http: HttpClient) {}
 

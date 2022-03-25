@@ -11,6 +11,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({name: 'dateT'})
 export class DateTPipe implements PipeTransform {
   transform(value: string): string {
-    return value.split('T')[0];
+
+    let monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  let d = new Date(value.split('T')[0])
+  var datestring = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+
+    return datestring;
   }
 }
