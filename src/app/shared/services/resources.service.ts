@@ -18,9 +18,20 @@ export class ResourcesService {
       return this.http.get<any>(`${environment.apiUrl}/wp/v2/resources?page=${page}&per_page=${this.perPage}`,{ observe: "response" })
     }
 
-    getById(id: number) {
-        return this.http.get<any>(`${environment.apiUrl}/wp/v2/resources/${id}`);
-    }
+    getById(options:any) {
+      let id = options.id;
+      delete options['id'];
+      return this.http.get<any>(`${environment.apiUrl}/wp/v2/resources/${id}`,{observe: "response" });
+  }
+  getBySlug(options:any) {
+    return this.http.get<any>(`${environment.apiUrl}/wp/v2/resources/`,{ params: {...options},observe: "response" });
+  }
 
+  getBy(options:any) {
+    let post = options['post'];
+    delete options['post'];
+    if(Number.isInteger(post)) return this.getById({id:post,...options});
+    else return this.getBySlug({slug:post,...options});
+  }
 
 }

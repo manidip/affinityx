@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(){
 
     this.loginForm = this.fb.group({
-      username: ['affinityxlog',[Validators.required]],
-      password: ['ob-7@3b#^1:_',[Validators.required]],
+      username: ['',[Validators.required]],
+      password: ['',[Validators.required]],
       rememberMe: [false]
     });
 
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     
     this.submitted = true;
     if (this.loginForm.invalid) return;
-    let toast = this.snotifyService.info('Logging you in', {...environment.toastConfig});
+    let toast = this.snotifyService.info('Logging you in', {...environment.toastConfig,timeout:2000});
     this.authenticationService.login(this.loginForm?.value)
     .pipe(first())
     .subscribe({
@@ -63,9 +63,10 @@ export class LoginComponent implements OnInit {
         }, 2000);
        
         },
-      error: (err: Error) => {
+      error: (err: any) => {
         toast.config.type = 'error';
-        toast.body = 'Invalid Credentials';
+        toast.body = (err.code == 'not_activated') ? err.message : 'Invalid Credentials'; 
+        
         this.submitted = false;
       },
     })

@@ -5,7 +5,7 @@ import { AuthorizationGuard,AuthenticationGuard } from '../../shared/guards/';
 import { 
   AdminComponent,DashboardComponent,AddDocumentComponent,
   ViewDocumentComponent,DocumentsComponent,PartnersComponent, 
-  ProductsComponent,ResourcesComponent,UsersComponent 
+  ProductsComponent,ResourcesComponent,UsersComponent,AddUserComponent
 } from './pages';
 
 const routes: Routes = [
@@ -17,6 +17,8 @@ const routes: Routes = [
         { path: 'documents/add', component: AddDocumentComponent },
         { path: 'documents/:id/:slug', component: ViewDocumentComponent },
         { path: 'documents', component: DocumentsComponent },
+        { path: 'users/edit/:id/:slug', component:  AddUserComponent },
+        { path: 'users/add', component: AddUserComponent },
         { path: 'users', component: UsersComponent },
         { path: 'partners', component: PartnersComponent},
         { path: 'resources', component: ResourcesComponent},

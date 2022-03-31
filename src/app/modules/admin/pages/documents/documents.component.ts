@@ -57,6 +57,8 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit(): void {
     
+    this.spinner.show();
+
     this.filterForm = this.fb.group({
       search: [''],
       product: ['',],
@@ -64,12 +66,24 @@ export class DocumentsComponent implements OnInit {
       partner: ['']
     })
     
-    this.getDocuments();
 
-    forkJoin([this.productService.getAll(),this.partnerService.getAll(),this.resourcesService.getAll()]).subscribe(([products, partners,resourses]) => {
+    forkJoin(
+      [
+        this.productService.getAll(),
+        this.partnerService.getAll(),
+        this.resourcesService.getAll()
+      ]).subscribe((
+        [
+          products, 
+          partners,
+          resourses
+        ]) => {
+
       this.products = products.body.map((product:any) => ({id: product.id,text: product.title}))
       this.partners = partners.body.map((product:any) => ({id: product.id,text: product.title}));
       this.resources = resourses.body.map((product:any) => ({id: product.id,text: product.title}));
+  
+      //this.getDocuments();
     });
     
   }
@@ -102,7 +116,26 @@ export class DocumentsComponent implements OnInit {
 
   public getDocuments(options?: any) {
     this.spinner.show();
-    return this.documentService.getAll({...this.filterForm.value,per_page:this.perPage,...options}).subscribe(response => {
+
+    let formValue = { ...this.filterForm.value };
+
+    for (let prop in formValue) {
+      if (!formValue[prop]) {
+        delete formValue[prop];
+      }
+  
+      if (Array.isArray(formValue[prop])) {
+        let resultArray = formValue[prop].filter(item => item);
+        if (resultArray.length > 0) {
+          formValue[prop] = resultArray;
+        } else {
+          delete formValue[prop];
+        }
+      }
+    }
+
+
+    return this.documentService.getAll({...formValue,per_page:this.perPage,...options}).subscribe(response => {
       let pageCount = response.headers.get('X-WP-TotalPages');
       this.total = Number(pageCount);
       this.spinner.hide();
@@ -129,10 +162,9 @@ export class DocumentsComponent implements OnInit {
       }, bold: false},
       {text: 'No', action: (toast) => {this.snotifyService.remove(toast.id)}},
     ]});
-
-
-    
   }
+
+
 
   identify(index:any, item:any) {
     return item.id;

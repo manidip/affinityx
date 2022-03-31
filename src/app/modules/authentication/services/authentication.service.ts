@@ -20,7 +20,7 @@ export class AuthenticationService {
 }
 
   login(userDetails: {username:string;password:string,rememberMe:boolean}): Observable<any>{
-
+    userDetails['custom_auth'] = 'is_active';
     return this.http.post<any>(`${environment.apiUrl}/jwt-auth/v1/token`, userDetails,httpOptions)
     .pipe(map(userResponse => {
         if(userResponse.success && userResponse.data.token) {

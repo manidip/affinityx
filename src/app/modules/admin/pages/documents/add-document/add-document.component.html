@@ -1,8 +1,6 @@
 <app-in-page-header title="Manage Documents" group="Tools" [links]="headerLinks"></app-in-page-header>
 <app-header-title [title]="pageTitle"></app-header-title>
 <form action="" method="POST" name="document-form" style="display: inline;" enctype="multipart/form-data" id="document-form" [formGroup]="createForm" (ngSubmit)="onSubmit()">
-	<input type="hidden" name="action" value="">
-	<input type="hidden" name="update_id" value="">
 	<div class="row" >
 		<div class="col-md-2 ax_form_column ax_form_column_border_right">
 			<label class="form-check-label test-border-yellow">Document Name</label>: <span class="ax_field_required"></span></div>
@@ -145,7 +143,7 @@
 	<div class="row" >
 		<div class="col-md-2 ax_form_column ax_form_column_border_right"><span class="ax_text_input_label">Files</span>: <span class="ax_field_required"></span></div>
 		<div class="col-md-7 ax_form_column ax_form_column_border_right">
-			<p><a target="_blank" *ngIf="currentProduct" href="{{currentProduct?.file.url}}" download class="btn btn-sm btn-outline-warning" role="button">View File</a></p>
+			<p><a target="_blank" *ngIf="currentItem" href="{{currentItem?.file.url}}" download class="btn btn-sm btn-outline-warning" role="button">View File</a></p>
 			<input 
             type="file" 
             accept="application/pdf"
@@ -164,7 +162,7 @@
 	<div class="row">
 		<div class="col-md-12" style="margin-top: 10px; text-align: right;">
 			<button [disabled]="!createForm.valid || submitted" type="submit" name="submit" class="btn btn-outline-warning btn-lg">
-				{{editingProduct ? 'Update' : 'Add'}}
+				{{editingItem ? 'Update' : 'Add'}}
 			</button>
 		</div>
 	</div>

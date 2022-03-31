@@ -16,7 +16,7 @@ export class TokenStorageService {
   }
  
   public getToken(): string | null {
-    if(localStorage.getItem('RememberMe')!== null){
+    if(localStorage.getItem('rememberMe')!== null){
       return window.localStorage.getItem(USER_KEY);
     }
     return window.sessionStorage.getItem(USER_KEY);
@@ -25,7 +25,7 @@ export class TokenStorageService {
     if(rememberMe){
       window.localStorage.removeItem(USER_KEY);
       window.localStorage.setItem(USER_KEY, JSON.stringify(user));
-      window.localStorage.setItem('RememberMe', JSON.stringify(rememberMe));
+      window.localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
     }else{
       window.sessionStorage.removeItem(USER_KEY);
       window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -35,7 +35,7 @@ export class TokenStorageService {
 
     let user:any;
 
-    if(localStorage.getItem('RememberMe')!== null){
+    if(localStorage.getItem('rememberMe')!== null){
       user = window.localStorage.getItem(USER_KEY);
     }else{
       user = window.sessionStorage.getItem(USER_KEY);

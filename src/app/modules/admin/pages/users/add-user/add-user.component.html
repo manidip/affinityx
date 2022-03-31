@@ -1,0 +1,142 @@
+
+<app-in-page-header title="Manage Users" group="Tools" [links]="headerLinks"></app-in-page-header>
+<app-header-title [title]="pageTitle"></app-header-title>
+<form  name="account-form" [formGroup]="userCreateForm" (ngSubmit)="onSubmit()">
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="username">Username</label>:
+       </div>
+       <div class="col-md-6 ax_form_column_border_right">
+          <input type="text"  formControlName="username" class="form-control form-control-sm ax_text_input">
+       </div>
+       <div class="col-md-4 ax_form_column">
+           Min chars: 4 | Must be unique.
+
+        </div>
+    </div>
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="password">Password</label>:
+       </div>
+       <div class="col-md-6 ax_form_column_border_right">
+          <input type="password" formControlName="password" class="form-control form-control-sm ax_text_input">
+       </div>
+       <div class="col-md-4 ax_form_column">
+        Min chars: 6
+        </div>
+    </div>
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="verify_password">Verify Password</label>:
+       </div>
+       <div class="col-md-6 ax_form_column_border_right">
+          <input type="text" formControlName="verify_password" class="form-control form-control-sm ax_text_input">
+       </div>
+       <div class="col-md-4 ax_form_column">Min chars: 6</div>
+    </div>
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="email">Email</label>:
+       </div>
+       <div class="col-md-6 ax_form_column_border_right">
+          <input type="text" formControlName="email" class="form-control form-control-sm ax_text_input"> 
+       </div>
+       <div class="col-md-4 ax_form_column">Max chars: 25 | Must be unique.</div>
+    </div>
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="first_name">First Name</label>:
+       </div>
+       <div class="col-md-6 ax_form_column_border_right">
+          <input type="text" formControlName="first_name" class="form-control form-control-sm ax_text_input">
+         
+       </div>
+       <div class="col-md-4 ax_form_column">
+           <!-- <span 
+           [ngClass]="{
+            'ax_error': f['first_name'].errors && f['first_name'].errors['minlength'] && !f['first_name'].pristine,
+            'ax_success': !f['first_name'].errors
+           }">Min chars: 2 | Letters only.</span> -->
+           <span>Min chars: 2 | Letters only.</span>
+        </div>
+    </div>
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="first_name">Last Name</label>:
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-6 ax_form_column_border_right">
+          <input type="text" formControlName="last_name" class="form-control form-control-sm ax_text_input">
+       </div>
+       <div class="col-md-4 ax_form_column">Min chars: 2 | Letters only.</div>
+    </div>
+    <div class="row" >
+       <!-- [Text] Username -->
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="department">Department</label>:
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-6 ax_form_column_border_right">
+          <input type="text" formControlName="department" class="form-control form-control-sm ax_text_input">
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-4 ax_form_column">Min chars: 3 | Letters only.</div>
+    </div>
+    <div class="row" >
+       <!-- [Text] Username -->
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="position">Position</label>:
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-6 ax_form_column_border_right">
+          <input type="text" formControlName="position" class="form-control form-control-sm ax_text_input">
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-4 ax_form_column">Min chars: 3 | Letters only.</div>
+    </div>
+    <div class="row" >
+       <!-- [Text] Username -->
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="partners">Partner</label>:
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-6 ax_form_column_border_right">
+        <ng-select2 [data]="partners" formControlName="partner"  [placeholder]="'Select Partner...'" class="form-control form-control-sm ax_text_input"></ng-select2>
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-4 ax_form_column">Select a partner.</div>
+    </div>
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="company">Status</label>:
+       </div>
+       <div class="col-md-6 ax_form_column_border_right">
+        <ng-select2 [data]="allStatus" formControlName="status"  [placeholder]="'Select Status...'"  class="form-control form-control-sm ax_text_input"></ng-select2>
+       </div>
+       <div class="col-md-4 ax_form_column">Select Status.</div>
+    </div>
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="fieldset_user-account_role-id">Role</label>:
+       </div>
+       <div class="col-md-6 ax_form_column_border_right">
+        <ng-select2 [data]="roles" formControlName="roles"  [placeholder]="'Select Role...'"  class="form-control form-control-sm ax_text_input"></ng-select2>
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-4 ax_form_column">Select a role.</div>
+    </div>
+    <div class="row" style="margin-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #43474e;">
+       <div class="col-md-2 ax_form_column ax_form_column_border_right"><span class="ax_text_input_label">Profile Picture</span>:</div>
+       <div class="col-md-6 ax_form_column ax_form_column_border_right">
+        <p *ngIf="currentItem" ><img src="{{currentItem?.profile_picture.thumbnail}}"/></p>
+          <input type="file" (change)="onFileChange($event)" name="profile_picture" class="form-control form-control-sm ax_file_input">
+       </div>
+       <div class="col-md-4 ax_form_column">Drop or select file</div>
+    </div>
+    <div class="row">
+       <div class="col-md-12" style="margin-top: 10px; text-align: right;">
+        <input type="submit" name="submit" class="btn btn-outline-warning btn-lg" value="{{editingItem ? 'Update' : 'Add'}}" [disabled]="!userCreateForm.valid"> 
+        <!-- [disabled]="!userCreateForm.valid" -->
+       </div>
+    </div>
+ </form>

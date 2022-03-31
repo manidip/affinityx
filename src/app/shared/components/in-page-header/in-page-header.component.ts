@@ -11,9 +11,7 @@ export class InPageHeaderComponent implements OnInit {
   @Input() title: string = '';
   @Input() links: any[] = [];
   
-  constructor() {
-    console.log(this.links);
-   }
+  constructor() {}
 
   ngOnInit(): void {}
 

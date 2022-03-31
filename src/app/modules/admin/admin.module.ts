@@ -9,7 +9,7 @@ import {
   AdminComponent,DashboardComponent,DocumentsComponent, 
   AddDocumentComponent,ViewDocumentComponent,
   ProductsComponent,ResourcesComponent,PartnersComponent,
-  UsersComponent
+  UsersComponent,AddUserComponent
 } from './pages';
 
 @NgModule({
@@ -23,6 +23,7 @@ import {
     PartnersComponent,
     ResourcesComponent,
     ProductsComponent,
+    AddUserComponent,
   ],
   imports: [
     CommonModule,

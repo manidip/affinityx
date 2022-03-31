@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder,FormGroup,Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { SnotifyService } from 'ng-snotify';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -29,8 +30,8 @@ export class AddDocumentComponent implements OnInit {
   createForm : FormGroup = this.fb.group({});
   submitted: boolean = false;
   editId:any;
-  editingProduct:any;
-  currentProduct:any;
+  editingItem:any;
+  currentItem:any;
   selectAllCheckbox:boolean = false;
   headerLinks:any = [];
 
@@ -44,6 +45,7 @@ export class AddDocumentComponent implements OnInit {
     private industryVerticalService: IndustryVerticalService,
     private documentService: DocumentService,
     private snotifyService: SnotifyService,
+    private titleService: Title,
     ) { 
       this.createForm = this.fb.group({
         title: ['',[Validators.required]],
@@ -60,13 +62,11 @@ export class AddDocumentComponent implements OnInit {
   ngOnInit(): void {
 
     this.editId = (this.route.snapshot.params['id']) ? parseInt(this.route.snapshot.params['id']) : '';
-    this.editingProduct = (this.editId) ? true : false;
-    this.currentProduct;
-
+    this.editingItem = (this.editId) ? true : false;
     this.spinner.show();
-    this.headerLinks.push({ title : 'List', url : '/admin/documents',hasPermission:true});
-    if(this.editingProduct){
-      
+    this.headerLinks = [{ title : 'List', url : '/admin/documents',hasPermission:true}];
+    this.titleService.setTitle(this.editingItem  ? 'Edit Document': this.pageTitle);
+    if(this.editingItem){
       this.headerLinks.push({ title : 'Add', url : '/admin/documents/add',hasPermission:true});
       this.createForm.controls['docFile'].setValidators(null);
       this.createForm.controls['docFile'].setErrors(null);     
@@ -79,38 +79,38 @@ export class AddDocumentComponent implements OnInit {
       this.industryVerticalService.getAll(),
     ];
 
-    if(this.editingProduct){
+    if(this.editingItem){
       requests.push(this.documentService.getBy({'post':this.editId}));
     }
    
     forkJoin(requests).subscribe(results => {
 
       
-      if(this.editingProduct && results[4].body){
-        this.currentProduct = results[4].body;
-        this.createForm.patchValue({title:this.currentProduct.title});
+      if(this.editingItem && results[4].body){
+        this.currentItem = results[4].body;
+        this.createForm.patchValue({title:this.currentItem.title});
       }
     
       this.partners = results[0].body.map((partner:any) => {
-        let controlState = (this.editingProduct) ? this.currentProduct['partners']?.map(function (partner){ return partner.id}).includes(partner.id): false
+        let controlState = (this.editingItem) ? this.currentItem['partners']?.map(function (partner){ return partner.id}).includes(partner.id): false
         this.partnersArray.push(this.fb.control(controlState));
         return {id: partner.id,title: partner.title}
       });
 
       this.products = results[1].body?.map((product:any) => {
-        let controlState = (this.editingProduct) ? this.currentProduct['products']?.map(function (product){ return product.id}).includes(product.id): false
+        let controlState = (this.editingItem) ? this.currentItem['products']?.map(function (product){ return product.id}).includes(product.id): false
         this.productsArray.push(this.fb.control(controlState));
         return {id: product.id,title: product.title};
       });
 
       this.resources = results[2].body.map((resourse:any) => {
-        let controlState = (this.editingProduct) ?  this.currentProduct['resources']?.map(function (resourse){ return resourse.id}).includes(resourse.id) : false;
+        let controlState = (this.editingItem) ?  this.currentItem['resources']?.map(function (resourse){ return resourse.id}).includes(resourse.id) : false;
         this.resourcesArray.push(this.fb.control(controlState));
         return {id: resourse.id,title: resourse.title}
       })
       
       this.industry_verticals = results[3].body.map((verticle:any) => {
-        let controlState = (this.editingProduct) ? this.currentProduct['verticals']?.map(function (verticle){ return verticle.id}).includes(verticle.id) : false;
+        let controlState = (this.editingItem) ? this.currentItem['verticals']?.map(function (verticle){ return verticle.id}).includes(verticle.id) : false;
         this.industryVerticalsArray.push(this.fb.control(controlState));
         return {id: verticle.id,title: verticle.title}
       });
@@ -140,7 +140,6 @@ export class AddDocumentComponent implements OnInit {
       const file = event.target.files[0];
       this.createForm.controls["docFile"].setValue(file);
     }
-
   }
 
   selectAll(type = ''): void {
@@ -200,15 +199,14 @@ export class AddDocumentComponent implements OnInit {
     this.documentService.insert_or_update(uploadData,this.editId).subscribe({
     next: (response) => {
       this.spinner.hide();
-      this.snotifyService.success(response, {...environment.toastConfig,timeout:1000});
+      this.snotifyService.success(response.message, {...environment.toastConfig,timeout:1000});
         setTimeout(() => {
-          if(!this.editingProduct) window.location.reload();
-          else this.submitted = false;
+          window.location.reload()
         }, 1500);
      },
      error: (response) => {
       this.spinner.hide();
-      this.snotifyService.error(response, {...environment.toastConfig,timeout:1000});
+      this.snotifyService.error(response.message, {...environment.toastConfig,timeout:1000});
       setTimeout(() => {
         this.submitted = false;
       }, 1500);

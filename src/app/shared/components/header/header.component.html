@@ -1,143 +1,94 @@
-<nav id="sidenav" class="sidenav" >
-        <div id="ax_logo_icon_nav" class="row">
-            <img class="axpp_nav_logo_ax_x" src="/assets/images/logo_ax_x-colored_50x50.png" width="30px">
-        </div>
-        <div class="row axpp_nav_header">
-            <div class="col-sm-3 axpp_nav_header_pic">
-                <a [routerLink]="['/admin/dashboard']" class="img profile_pic rounded-circle" style="background-image: url('/assets/images/default_profile-pic-1.jpg');"></a>
-            </div>
-            <div class="col-sm-9 axpp_nav_header_details" *ngIf="currentUser">
-            
-                <span class="user_greeting">Hi, </span>
-                <span class="ax_welcome_username" style="font-size: 16px;">
+<nav id="sidenav" class="sidenav">
+	<div id="ax_logo_icon_nav" class="row"> <img class="axpp_nav_logo_ax_x" src="/assets/images/logo_ax_x-colored_50x50.png" width="30px"> </div>
+	<div class="row axpp_nav_header">
+		<div class="col-sm-3 axpp_nav_header_pic">
+			<a [routerLink]="['/admin/dashboard']" class="img profile_pic rounded-circle" style="background-image: url('/assets/images/default_profile-pic-1.jpg');"></a>
+		</div>
+		<div class="col-sm-9 axpp_nav_header_details" *ngIf="currentUser"> <span class="user_greeting">Hi, </span> <span class="ax_welcome_username" style="font-size: 16px;">
                {{currentUser.displayName}}
-              </span>
-                <span class="user_greeting">!</span>
-                <!-- <br>
+              </span> <span class="user_greeting">!</span>
+              <span class="userPartner" *ngIf="currentUser.partner[0] && !currentUser.isAdmin"> {{currentUser?.partner[0].title}}</span>
+              <span class="userPartner" *ngIf="currentUser.isAdmin">Administrator</span>
+			<!-- <br>
                 <a href="#" class="user_btn">Account Settings</a> -->
-                <br>
-                <a href="#" (click)="logout($event)" class="user_btn">Logout</a>
-            </div>
-        </div>
-        <!-- ---------- ---------- ---------- ---------- ---------- ---------- -->
-
-            <ng-container *ngIf="currentUser.isAdmin">
-                <div class="axpp_nav_section">Your Tools</div>
-                <ul class="list-unstyled">
-                <li>
-                    <a [routerLink]="['/admin/users']" style="white-space: nowrap; border: medium none;" target="_self">
-                        <i class="fas fa-user fa-lg axpp_icon"></i> Manage Users
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="['/admin/partners']" style="white-space: nowrap; border: medium none;" target="_self">
-                        <i class="fas fa-building fa-lg axpp_icon"></i> Manage Partners
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="['/admin/products']" style="white-space: nowrap; border: medium none;" target="_self">
-                        <i class="fas fa-box fa-lg axpp_icon"></i> Manage Products
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="['/admin/resources']" style="white-space: nowrap; border: medium none;" target="_self">
-                        <i class="fas fa-folder-plus fa-lg axpp_icon"></i> Manage Resources
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="['/admin/documents']" style="white-space: nowrap; border: medium none;" target="_self">
-                        <i class="fas fa-file fa-lg axpp_icon"></i> Manage Documents
-                    </a>
-                </li>
-                </ul>
-            </ng-container>
-            
-
-        <div class="axpp_nav_section">Your Resources</div>
-        <ul class="list-unstyled">
-            <li>
-                <a href="#" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-toolbox fa-lg axpp_icon"></i> Sales Collateral
-                </a>
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#" style="white-space: nowrap; border: medium none;" target="_self">
-                            <i class="fas fa-file-excel fa-lg axpp_icon"></i> Sell Sheets
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" style="white-space: nowrap; border: medium none;" target="_self">
-                            <i class="fas fa-file-powerpoint fa-lg axpp_icon"></i> Presentation Slides
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-toolbox fa-lg axpp_icon"></i> FAQs
-                </a>
-            </li>
-            <li>
-                <a href="#" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-file-alt fa-lg axpp_icon"></i> Advertising Guidelines
-                </a>
-            </li>
-            <li>
-                <a href="#" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-envelope-open-text fa-lg axpp_icon"></i> Case Studies
-                </a>
-            </li>
-            <li>
-                <a href="#" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-folder fa-lg axpp_icon"></i> Forms
-                </a>
-            </li>
-            <li>
-                <a href="#" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-file-pdf fa-lg axpp_icon"></i> Guides and Help Documents
-                </a>
-            </li>
-        </ul>
-        <div class="axpp_nav_section">Your Platforms</div>
-        <ul class="list-unstyled">
-            <li>
-                <a target="_blank" href="https://captivateprime.adobe.com/app/admin?i_qp_user_id=7053598&accountId=74024#/gettingStarted" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-box fa-lg axpp_icon"></i> Axcelerate LMS
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="https://reports.axsmb.com/#/signin?redirect=%2Fprojects" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-box fa-lg axpp_icon"></i> Tableau
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="https://affinityx.tapclicks.com/client/analytics/dist/#/login" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-box fa-lg axpp_icon"></i> TapClicks
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="https://orders.axsmb.com/login/?r=%2F" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-box fa-lg axpp_icon"></i> IDEA Titan®
-                </a>
-            </li>
-            <li>
-                <a target="_blank" href="https://affinityxhelp.zendesk.com/hc/en-us/restricted?return_to=https%3A%2F%2Faffinityxhelp.zendesk.com%2Fhc%2Fen-us" style="white-space: nowrap; border: medium none;" target="_self">
-                    <i class="fas fa-box fa-lg axpp_icon"></i> ZenDesk
-                </a>
-            </li>
-        </ul>
-        <!-- ---------- ---------- ---------- ---------- ---------- ---------- -->
+			<br> <a href="#" (click)="logout($event)" class="user_btn">Logout</a> </div>
+	</div>
+	<!-- ---------- ---------- ---------- ---------- ---------- ---------- -->
+	<ng-container *ngIf="currentUser.isAdmin">
+		<div class="axpp_nav_section">Your Tools</div>
+		<ul class="list-unstyled">
+			<li routerLinkActive="active">
+				<a [routerLink]="['/admin/users']" style="white-space: nowrap; border: medium none;" target="_self"> <i class="fas fa-user fa-lg axpp_icon"></i> Manage Users </a>
+			</li>
+			<li routerLinkActive="active">
+				<a [routerLink]="['/admin/partners']" style="white-space: nowrap; border: medium none;" target="_self"> <i class="fas fa-building fa-lg axpp_icon"></i> Manage Partners </a>
+			</li>
+			<li routerLinkActive="active">
+				<a [routerLink]="['/admin/products']" style="white-space: nowrap; border: medium none;" target="_self"> <i class="fas fa-box fa-lg axpp_icon"></i> Manage Products </a>
+			</li>
+			<li routerLinkActive="active">
+				<a [routerLink]="['/admin/resources']" style="white-space: nowrap; border: medium none;" target="_self"> <i class="fas fa-folder-plus fa-lg axpp_icon"></i> Manage Resources </a>
+			</li>
+			<li routerLinkActive="active">
+				<a [routerLink]="['/admin/documents']" style="white-space: nowrap; border: medium none;" target="_self"> <i class="fas fa-file fa-lg axpp_icon"></i> Manage Documents </a>
+			</li>
+		</ul>
+	</ng-container>
+	<div class="axpp_nav_section">Your Resources</div>
+	<ul class="list-unstyled">
+		<li>
+			<a href="#" (click)="$event.preventDefault()"> <i class="fas fa-toolbox fa-lg axpp_icon"></i> Sales Collateral </a>
+			<ul class="list-unstyled">
+				<li routerLinkActive="active">
+					<a [routerLink]="['/user/documents/sell-sheets']"> <i class="fas fa-file-excel fa-lg axpp_icon"></i> Sell Sheets </a>
+				</li>
+				<li routerLinkActive="active">
+					<a [routerLink]="['/user/documents/presentation-slides']"> <i class="fas fa-file-powerpoint fa-lg axpp_icon"></i> Presentation Slides </a>
+				</li>
+			</ul>
+		</li>
+		<li routerLinkActive="active">
+			<a [routerLink]="['/user/documents/faqs']"> <i class="fas fa-toolbox fa-lg axpp_icon"></i> FAQs </a>
+		</li>
+		<li>
+			<a href="#" (click)="$event.preventDefault()"> <i class="fas fa-file-alt fa-lg axpp_icon"></i> Advertising Guidelines </a>
+		</li>
+		<li>
+			<a href="#" (click)="$event.preventDefault()"> <i class="fas fa-envelope-open-text fa-lg axpp_icon"></i> Case Studies </a>
+		</li>
+		<li>
+			<a href="#" (click)="$event.preventDefault()"> <i class="fas fa-folder fa-lg axpp_icon"></i> Forms </a>
+		</li>
+		<li>
+			<a href="#" (click)="$event.preventDefault()"> <i class="fas fa-file-pdf fa-lg axpp_icon"></i> Guides and Help Documents </a>
+		</li>
+	</ul>
+	<div class="axpp_nav_section">Your Platforms</div>
+	<ul class="list-unstyled">
+		<li>
+			<a target="_blank" href="https://captivateprime.adobe.com/app/admin?i_qp_user_id=7053598&accountId=74024#/gettingStarted"> <i class="fas fa-box fa-lg axpp_icon"></i> Axcelerate LMS </a>
+		</li>
+		<li>
+			<a target="_blank" href="https://reports.axsmb.com/#/signin?redirect=%2Fprojects"> <i class="fas fa-box fa-lg axpp_icon"></i> Tableau </a>
+		</li>
+		<li>
+			<a target="_blank" href="https://affinityx.tapclicks.com/client/analytics/dist/#/login"> <i class="fas fa-box fa-lg axpp_icon"></i> TapClicks </a>
+		</li>
+		<li>
+			<a target="_blank" href="https://orders.axsmb.com/login/?r=%2F"> <i class="fas fa-box fa-lg axpp_icon"></i> IDEA Titan® </a>
+		</li>
+		<li>
+			<a target="_blank" href="https://affinityxhelp.zendesk.com/hc/en-us/restricted?return_to=https%3A%2F%2Faffinityxhelp.zendesk.com%2Fhc%2Fen-us"> <i class="fas fa-box fa-lg axpp_icon"></i> ZenDesk </a>
+		</li>
+	</ul>
+	<!-- ---------- ---------- ---------- ---------- ---------- ---------- -->
 </nav>
 <div class="ax_header">
-    <div id="header" class="container ax_header_container">
-        <div class="row">
-            <div class="col-md-12 ax_logo_header_link">
-                <a href="http://partnerportal.affinityx.devt/login" target="_self">
-                    <img class="ax_header_app_icon" src="/assets/images/study_logo_ax_portal-colored_3_100x133.png">
-                    <span class="ax_header_app_name ax_font_color_1">partner portal</span>
-                </a>
-            </div>
-        </div>
-    </div>
+	<div id="header" class="container ax_header_container">
+		<div class="row">
+			<div class="col-md-12 ax_logo_header_link">
+				<a href="http://partnerportal.affinityx.devt/login" target="_self"> <img class="ax_header_app_icon" src="/assets/images/study_logo_ax_portal-colored_3_100x133.png"> <span class="ax_header_app_name ax_font_color_1">partner portal</span> </a>
+			</div>
+		</div>
+	</div>
 </div>
-

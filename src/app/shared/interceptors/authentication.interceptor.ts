@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {  HttpRequest,  HttpHandler, HttpEvent,  HttpInterceptor} from '@angular/common/http';
+import {  HttpRequest,  HttpHandler, HttpEvent,  HttpInterceptor, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from '../../modules/authentication/services/token-storage.service';
 import { environment } from 'src/environments/environment';
@@ -14,9 +14,14 @@ export class AuthenticationInterceptor implements HttpInterceptor {
   
     const userDetails = this.tokenStorageService.getUser();
     const isApiUrl = request.url.startsWith(environment.apiUrl);
+    const d = new Date();
 
     if (userDetails && userDetails.token  && isApiUrl) {
-      request = request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + userDetails.token) });
+      request = request.clone({ 
+        headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + userDetails.token),
+        params:(request.params ? request.params : new HttpParams())
+        .set('time', d.getTime())
+      });
     }
   
 

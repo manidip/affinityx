@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import { forkJoin } from 'rxjs';
 import { SnotifyService } from 'ng-snotify';
 import {Title} from "@angular/platform-browser";
 import { TokenStorageService } from 'src/app/modules/authentication/services/token-storage.service';
@@ -22,7 +21,7 @@ export class UsersComponent implements OnInit {
   filterForm : FormGroup;
   notFoundMessage = "No Users Found";
   headerLinks:[{}] = [{}];
-  perPage = environment.documentsPerPage;
+  perPage = 3;
   current: number = 1;
   total: number = 1;
 
@@ -48,12 +47,31 @@ export class UsersComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.getusers();
+    this.getUsers();
   }
 
-  public getusers(options?: any) {
+  public getUsers(options?: any) {
     this.spinner.show();
-    return this.usersService.getAll({...this.filterForm.value,per_page:10,...options}).subscribe(response => {
+
+    let formValue = { ...this.filterForm.value };
+
+    for (let prop in formValue) {
+      if (!formValue[prop]) {
+        delete formValue[prop];
+      }
+  
+      if (Array.isArray(formValue[prop])) {
+        let resultArray = formValue[prop].filter(item => item);
+        if (resultArray.length > 0) {
+          formValue[prop] = resultArray;
+        } else {
+          delete formValue[prop];
+        }
+      }
+    }
+
+
+    return this.usersService.getAll({...formValue,per_page:this.perPage,...options}).subscribe(response => {
       let pageCount = response.headers.get('X-WP-TotalPages');
       this.total = Number(pageCount);
       this.spinner.hide();
@@ -62,10 +80,47 @@ export class UsersComponent implements OnInit {
   }
 
   onSubmit(){
-    this.getusers();
+    this.current =  1
+    this.getUsers();
   }
+
+  public onGoTo(page: number): void {
+    this.current = page
+  } 
+
+  public onNext(page: number): void {
+    this.current = page + 1
+    this.getUsers({page:this.current});
+  }
+  public onPrevious(page: number): void {
+    this.current = page - 1
+    this.getUsers({page:this.current});
+  }
+  
   onsearKeyword(value){
     if(value.length == 0) this.onSubmit();
+  }
+
+  delete(user){
+    this.snotifyService.confirm('Are you sure...', {...environment.toastConfig,timeout:5000,pauseOnHover: true,buttons: [
+      {text: 'Yes', action: (toast) => {
+        this.spinner.show();
+        this.snotifyService.remove(toast.id)
+        this.usersService.delete(user).subscribe({
+         next:(response) => {
+          this.spinner.hide();
+          this.getUsers();
+          this.snotifyService.success(response, {...environment.toastConfig,timeout:1000});
+         }, 
+         error: (response) => {
+          this.spinner.hide();
+          this.snotifyService.error(response, {...environment.toastConfig,timeout:1000});
+         }
+        })
+      }, bold: false},
+      {text: 'No', action: (toast) => {this.snotifyService.remove(toast.id)}},
+    ]});
+
   }
 
 }
