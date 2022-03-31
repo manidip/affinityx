@@ -1,0 +1,33 @@
+.partner-dashboard {
+    justify-content: center;
+    text-align: center;
+}
+.partner-dashboard h2 {
+    font-size: 1.3em;
+}
+.partner-dashboard h2 span {
+    color: #77abb7;
+}
+.partner-dashboard h3 {
+    color: #dfa908;
+    font-size: 1em;
+}
+.partner-dashboard .bottom-text {
+    color: #606669;
+}
+
+ul.top-downloads {
+    margin: 0;
+    padding: 0;
+}
+.top-downloads li {
+    display: inline-block;
+    background: #b08609;
+    margin-right: 5px;
+}
+ul.top-downloads li a {
+    padding: 25px 8px;
+    color: #fff;
+    font-size: 15px;
+    display: block;
+}
