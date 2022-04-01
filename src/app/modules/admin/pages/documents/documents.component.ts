@@ -70,7 +70,7 @@ export class DocumentsComponent implements OnInit {
     forkJoin(
       [
         this.productService.getAll(),
-        this.partnerService.getAll(),
+        this.partnerService.getAll({}),
         this.resourcesService.getAll()
       ]).subscribe((
         [

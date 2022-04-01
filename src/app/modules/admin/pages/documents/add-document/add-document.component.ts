@@ -20,7 +20,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AddDocumentComponent implements OnInit {
 
-  pageTitle: string = "Add documents";
+  pageTitle: string = "Add Document";
   documents:any;
   products: any;
   resources: any;
@@ -73,7 +73,7 @@ export class AddDocumentComponent implements OnInit {
     }
 
     let requests =  [
-      this.partnerService.getAll(),
+      this.partnerService.getAll({}),
       this.productService.getAll(),
       this.resourcesService.getAll(),
       this.industryVerticalService.getAll(),

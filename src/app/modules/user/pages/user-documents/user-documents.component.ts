@@ -91,6 +91,7 @@ export class UserDocumentsComponent implements OnInit {
       
       if(currentResource.body){
         this.filterForm.patchValue({resource:currentResource.body[0].id});
+        this.pageTitle += ' : '+ currentResource.body[0].title;
       }
   
       if(!this.currentUser.isAdmin){

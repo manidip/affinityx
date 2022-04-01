@@ -79,7 +79,7 @@ export class AddUserComponent implements OnInit {
     }
 
     let requests =  [
-      this.partnerService.getAll(),
+      this.partnerService.getAll({}),
       this.userService.getRoles(),
     ];
 

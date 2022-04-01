@@ -11,13 +11,45 @@ export class PartnerService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(page?: number) {
-    page = (page) ? page : 1;
-    return this.http.get<any>(`${environment.apiUrl}/wp/v2/partners?page=${page}&per_page=${this.perPage}`,{ observe: "response" })
+  getAll(options?:any) {
+    if(!options.page)  options['page'] = 1;
+    return this.http.get<any>(`${environment.apiUrl}/wp/v2/partners`,{ params: {...options},observe: "response" })
   }
 
-  getById(id: number) {
-      return this.http.get<any>(`${environment.apiUrl}/wp/v2/partners/${id}`);
+  getById(options?:any) {
+    let id = options.id;
+    delete options['id'];
+    return this.http.get<any>(`${environment.apiUrl}/wp/v2/partners/${id}`,{observe: "response" });
   }
+  getBySlug(options:any) {
+    return this.http.get<any>(`${environment.apiUrl}/wp/v2/partners/`,{ params: {...options},observe: "response" });
+  }
+  
+  getBy(options?:any) {
+    let post = options['post'];
+    delete options['post'];
+    if(Number.isInteger(post)) return this.getById({id:post,...options});
+    else return this.getBySlug({slug:post,...options});
+  }
+
+  insert_or_update(data:any,id:Number | string){
+    if(Number.isInteger(id)){
+      return this.update(data,id)
+    }else{
+      return this.insert(data)
+    }
+  }
+
+  insert(data:any){
+    return this.http.post<any>(`${environment.apiUrl}/wp/v2/partners/`,data);
+  }
+  update(data:any,id:Number | string){
+    return this.http.post<any>(`${environment.apiUrl}/wp/v2/partners/${id}`,data);
+  }
+  delete(item:any){
+    return this.http.delete<any>(`${environment.apiUrl}/wp/v2/partners/${item.id}`);
+  }
+
+
 }
 

@@ -1,0 +1,68 @@
+<app-in-page-header title="Manage Partners" group="Tools" [links]="headerLinks"></app-in-page-header>
+<app-header-title [title]="pageTitle"></app-header-title>
+
+<form action="#" method="POST" name="partner-form" [formGroup]="createForm" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
+    <div class="row">
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="name">Name</label>:
+       </div>
+       <div class="col-md-7 ax_form_column_border_right">
+          <input formControlName="title" type="text" class="form-control form-control-sm ax_text_input">
+       </div>
+       <div class="col-md-3 ax_form_column">Min chars: 2 | Must be unique.</div>
+    </div>
+    <div class="row">
+       <!-- [Text] Username -->
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="color_scheme">Color Scheme</label>:
+       </div>
+       <div class="col-md-7 ax_form_column_border_right">
+         <input class="form-control" (colorPickerChange)="colorChanged($event)" formControlName="color_scheme" [cpPosition]="'bottom'" [value]="colorScheme" [(colorPicker)]="colorScheme" class="form-control form-control-sm ax_text_input" />
+       </div>
+       <div class="col-md-3 ax_form_column">Min chars: 2 | Letters only.</div>
+    </div>
+    <div class="row">
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="partner_code">Partner Code</label>:
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-7 ax_form_column_border_right">
+          <input formControlName="partner_code" type="text" class="form-control form-control-sm ax_text_input">
+       </div>
+       <div class="col-md-3 ax_form_column">Min chars: 2 | Letters only. | Must be unique.</div>
+    </div>
+    <div class="row">
+       <!-- [Text] Username -->
+       <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="contact_persons">Contact Persons</label>:
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-7 ax_form_column_border_right">
+          <input formControlName="contact_persons" type="text" class="form-control form-control-sm ax_text_input">
+       </div>
+       <!-- ---------- ---------- ---------- -->
+       <div class="col-md-3 ax_form_column">Min chars: 2 | Letters only.</div>
+    </div>
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right"><span class="ax_text_input_label">Logo</span>:</div>
+       <div class="col-md-7 ax_form_column ax_form_column_border_right">
+          <div class="image-preview" *ngIf="currentItem?.logo"><img src="{{currentItem?.logo}}" /></div>
+          <input (change)="onLogoChange($event)" type="file" name="logo" id="logo" class="form-control form-control-sm ax_file_input">
+       </div>
+       <div class="col-md-3 ax_form_column">Drop or select file | Max 3MB</div>
+    </div>
+    <div class="row" >
+       <div class="col-md-2 ax_form_column ax_form_column_border_right"><span class="ax_text_input_label">Banner Image</span>:</div>
+       <div class="col-md-7 ax_form_column ax_form_column_border_right">
+          <input (change)="onBannerImageChange($event)" type="file" class="form-control form-control-sm ax_file_input">
+       </div>
+       <div class="col-md-3 ax_form_column">Drop or select file | Max 5MB</div>
+    </div>
+    <div class="row">
+       <div class="col-md-9" style="margin-top: 10px; text-align: right;">
+         <button [disabled]="submitted" type="submit" name="submit" class="btn btn-outline-warning btn-lg">
+				{{editingItem ? 'Update' : 'Add'}}
+			</button>
+       </div>
+    </div>
+ </form>

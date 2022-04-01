@@ -1,6 +1,7 @@
 export  *  from './dashboard/dashboard.component';
 export  *  from './users/users.component';
 export  *  from './users/add-user/add-user.component';
+export  *  from './partners/add-partner/add-partner.component';
 export  *  from './partners/partners.component';
 export  *  from './resourses/resourses.component';
 export  *  from './products/products.component';

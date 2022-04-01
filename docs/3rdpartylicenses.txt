@@ -48,6 +48,9 @@ MIT
 ng-snotify
 MIT
 
+ngx-color-picker
+MIT
+
 ngx-spinner
 MIT
 

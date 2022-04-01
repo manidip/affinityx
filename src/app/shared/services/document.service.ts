@@ -10,10 +10,7 @@ export class DocumentService {
   constructor(private http: HttpClient) {}
 
   getAll(options:any) {
-    if(!options.page){
-      options['page'] = 1;
-    }
-  
+    if(!options.page)  options['page'] = 1;
     return this.http.get<any>(`${environment.apiUrl}/wp/v2/documents`,{ params: {...options},observe: "response" })
   }
 

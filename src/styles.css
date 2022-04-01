@@ -674,7 +674,8 @@ select.form-control:focus,
     margin-bottom: 7px;
 }
 .image-preview img {
-    max-width: 100%;
+   width: 100%;
+    max-height: 100%;
     object-fit: contain;
 }
 
