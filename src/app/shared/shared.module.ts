@@ -9,14 +9,16 @@ import { NoResultComponent } from './components/no-result/no-result.component';
 import { InPageHeaderComponent } from './components/in-page-header/in-page-header.component';
 import { HeaderTitleComponent } from './components/header-title/header-title.component';
 import { DateTPipe } from "../shared/pipes/dateT";
+import { SafeHtmlPipe } from "../shared/pipes/safeHtml";
 import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent, 
     PaginationComponent, 
-    NoResultComponent, InPageHeaderComponent, HeaderTitleComponent,DateTPipe, NotAuthorizedComponent
+    NoResultComponent, InPageHeaderComponent, HeaderTitleComponent,DateTPipe,SafeHtmlPipe, NotAuthorizedComponent, ErrorComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { NotAuthorizedComponent } from './components/not-authorized/not-authoriz
     NoResultComponent,
     InPageHeaderComponent,
     HeaderTitleComponent,
-    DateTPipe
+    DateTPipe,
+    SafeHtmlPipe
   ]
 })
 export class SharedModule { }

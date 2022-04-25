@@ -43,6 +43,15 @@
        <!-- ---------- ---------- ---------- -->
        <div class="col-md-3 ax_form_column">Min chars: 2 | Letters only.</div>
     </div>
+    <div class="row">
+      <div class="col-md-2 ax_form_column ax_form_column_border_right">
+          <label class="ax_text_input_label" for="contact_persons">Homepage</label>:
+      </div>
+      <div class="col-md-7 ax_form_column_border_right">
+         <ng-select2 [data]="dashboards" formControlName="dashboard"  [placeholder]="'--Select Dashboard--'" class="form-control form-control-sm ax_text_input"></ng-select2>
+      </div>
+      <div class="col-md-3 ax_form_column"></div>
+  </div>
     <div class="row" >
        <div class="col-md-2 ax_form_column ax_form_column_border_right"><span class="ax_text_input_label">Logo</span>:</div>
        <div class="col-md-7 ax_form_column ax_form_column_border_right">

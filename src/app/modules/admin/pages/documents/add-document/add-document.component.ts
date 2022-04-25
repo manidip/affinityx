@@ -9,7 +9,7 @@ import { DocumentService } from 'src/app/shared/services/document.service';
 import { IndustryVerticalService } from 'src/app/shared/services/industry-vertical.service';
 import { PartnerService } from 'src/app/shared/services/partner.service';
 import { ProductService } from 'src/app/shared/services/product.service';
-import { ResourcesService } from 'src/app/shared/services/resources.service';
+import { ResourceService } from 'src/app/shared/services/resource.service';
 import { minSelectedCheckboxes } from 'src/app/shared/validators/minSelectedCheckboxes';
 import { environment } from 'src/environments/environment';
 
@@ -40,7 +40,7 @@ export class AddDocumentComponent implements OnInit {
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private productService: ProductService,
-    private resourcesService: ResourcesService,
+    private resourceService: ResourceService,
     private partnerService: PartnerService,
     private industryVerticalService: IndustryVerticalService,
     private documentService: DocumentService,
@@ -75,7 +75,7 @@ export class AddDocumentComponent implements OnInit {
     let requests =  [
       this.partnerService.getAll({}),
       this.productService.getAll(),
-      this.resourcesService.getAll(),
+      this.resourceService.getAll({}),
       this.industryVerticalService.getAll(),
     ];
 
@@ -194,18 +194,18 @@ export class AddDocumentComponent implements OnInit {
         
     }
 
-    this.spinner.show();
+    this.spinner.show('formSubmit');
    
     this.documentService.insert_or_update(uploadData,this.editId).subscribe({
     next: (response) => {
-      this.spinner.hide();
+      this.spinner.hide('formSubmit');
       this.snotifyService.success(response.message, {...environment.toastConfig,timeout:1000});
         setTimeout(() => {
           window.location.reload()
         }, 1500);
      },
      error: (response) => {
-      this.spinner.hide();
+      this.spinner.hide('formSubmit');
       this.snotifyService.error(response.message, {...environment.toastConfig,timeout:1000});
       setTimeout(() => {
         this.submitted = false;

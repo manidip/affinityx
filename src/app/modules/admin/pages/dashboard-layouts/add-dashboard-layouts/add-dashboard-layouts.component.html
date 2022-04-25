@@ -1,0 +1,190 @@
+<app-in-page-header title="Manage Dashboards" group="Tools" [links]="headerLinks"></app-in-page-header>
+<app-header-title [title]="pageTitle"></app-header-title>
+<form action="#" method="POST" name="dashboard-form" [formGroup]="createForm" id="dashboard-form" (ngSubmit)="onSubmit()">
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="ax_text_input_label" for="name">Name</label>: </div>
+		<div class="col-md-10">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="row">
+						<div class="col-md-12">
+							<input type="text" value="" formControlName="title" id="name" class="form-control form-control-sm ax_text_input"> 
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 ax_form_column"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="ax_text_input_label" for="name">Alert</label>: </div>
+		<div class="col-md-10">
+			<div class="row" formGroupName="alert">
+				<div class="col-md-9">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="ax_multicheckbox">
+								<label class="form-check-label ax_multicheckbox_value_option_label">
+									<input type="checkbox" formControlName="show_hide" class="custom-control-input" value="1"> Show/Hide </label>
+							</div>
+						</div>
+						<div class="col-md-12" style="margin-top: 10px;">
+							<input type="text" placeholder="Alert Title" value="" formControlName="alert_title" id="name" class="form-control form-control-sm ax_text_input"> </div>
+						<div class="col-md-12" style="margin-top: 10px;">
+							<textarea placeholder="Alert content." rows="5" formControlName="alert_body" class="form-control form-control-sm ax_text_input"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 ax_form_column"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="ax_text_input_label" for="name">Welcome Text</label>: </div>
+		<div class="col-md-10">
+			<div class="row" formGroupName="welcome">
+				<div class="col-md-9">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="ax_multicheckbox">
+								<label class="form-check-label ax_multicheckbox_value_option_label">
+									<input type="checkbox" formControlName="show_hide" class="custom-control-input" value="1"> Show/Hide </label>
+							</div>
+						</div>
+						<div class="col-md-12" style="margin-top: 10px;">
+							<textarea placeholder="Welcome Text Content." rows="5" formControlName="welcome_text" class="form-control form-control-sm ax_text_input"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 ax_form_column"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="ax_text_input_label" for="name">Search Form</label>: </div>
+		<div class="col-md-10">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="ax_multicheckbox">
+								<label class="form-check-label ax_multicheckbox_value_option_label">
+									<input type="checkbox" formControlName="show_hide_search" class="custom-control-input" value="1"> Show/Hide </label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 ax_form_column"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="ax_text_input_label" for="name">CTA Buttons</label>: </div>
+		<div class="col-md-10">
+			<div class="row" formGroupName="cta_buttons">
+				<div class="col-md-9">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="ax_multicheckbox">
+								<label class="form-check-label ax_multicheckbox_value_option_label">
+									<input type="checkbox" formControlName="show_hide" class="custom-control-input" value="1"> Show/Hide </label>
+							</div>
+						</div>
+						<div class="col-md-12" style="margin-top: 10px;">
+							<input type="text" placeholder="Heading" value="" formControlName="heading" id="name" class="form-control form-control-sm ax_text_input"> </div>
+						</div>
+						<div formArrayName="buttons">
+							<div *ngFor="let ctaButton of buttonsArray.controls; let i=index" class="col-md-12" style="margin-top: 10px;">
+								<div class="row" [formGroupName]="i">
+									<div class="col-md-2 ax_form_column_border_right"> Button 1 </div>
+									<div class="col-md-10">
+										<input formControlName="title" placeholder="Title" type="text" class="form-control form-control-sm ax_text_input">
+										<input formControlName="link" type="url" style="margin-top: 10px;" placeholder="Link"  class="form-control form-control-sm ax_text_input"> </div>
+								</div>
+							</div>
+						</div>
+				</div>
+				<div class="col-md-3 ax_form_column"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="ax_text_input_label" for="name">Top Downloads</label>: </div>
+		<div class="col-md-10">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="ax_multicheckbox">
+								<label class="form-check-label ax_multicheckbox_value_option_label">
+									<input type="checkbox"  formControlName="show_hide_top_downloads" class="custom-control-input" value="1"> Show/Hide </label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 ax_form_column"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-md-2 ax_form_column ax_form_column_border_right">
+			<label class="ax_text_input_label" for="name">Social Icons</label>: </div>
+		<div class="col-md-10">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="row" formGroupName="social_icons">
+						<div class="col-md-12">
+							<div class="ax_multicheckbox">
+								<label class="form-check-label ax_multicheckbox_value_option_label">
+									<input type="checkbox" formControlName="show_hide" class="custom-control-input" value="1"> Show/Hide </label>
+							</div>
+						</div>
+						<div class="col-md-12" style="margin-top: 10px;">
+							<div class="row">
+								<div class="col-md-2 ax_form_column_border_right">Facebook</div>
+								<div class="col-md-10">
+									<input type="text" value="" formControlName="facebook" class="form-control form-control-sm ax_text_input"> </div>
+							</div>
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-2 ax_form_column_border_right">Instagram</div>
+								<div class="col-md-10">
+									<input type="text" value="" formControlName="instagram" class="form-control form-control-sm ax_text_input"> </div>
+							</div>
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-2 ax_form_column_border_right">Linkdin</div>
+								<div class="col-md-10">
+									<input type="text" value="" formControlName="linkdin" class="form-control form-control-sm ax_text_input"> </div>
+							</div>
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-2 ax_form_column_border_right">Twitter</div>
+								<div class="col-md-10">
+									<input type="text" value="" formControlName="twitter" class="form-control form-control-sm ax_text_input"> </div>
+							</div>
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-2 ax_form_column_border_right">Youtube</div>
+								<div class="col-md-10">
+									<input type="text" value="" formControlName="youtube" class="form-control form-control-sm ax_text_input"> </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 ax_form_column"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2" style="margin-top: 10px; text-align: left;">
+		</div>
+		<div class="col-md-8" style="margin-top: 10px; text-align: right;">
+			<button [disabled]="!createForm.valid || submitted" type="submit" name="submit" class="btn btn-outline-warning btn-lg">
+				{{editingItem ? 'Update' : 'Add'}}
+			</button>
+		</div>
+	</div>
+</form>

@@ -135,20 +135,18 @@ export class AddUserComponent implements OnInit {
         
     }
 
-    this.spinner.show();
+    this.spinner.show('formSubmit');
    
     this.userService.insert_or_update(uploadData,this.editId).subscribe({
     next: (response) => {
-      console.log(response);
-      this.spinner.hide();
+      this.spinner.hide('formSubmit');
       this.snotifyService.success(response.message, {...environment.toastConfig,timeout:1000});
         setTimeout(() => {
           window.location.reload()
         }, 1500);
      },
      error: (response) => {
-      console.log(response);
-      this.spinner.hide();
+      this.spinner.hide('formSubmit');
       this.snotifyService.error(response.message, {...environment.toastConfig,timeout:1000});
       setTimeout(() => {
         this.submitted = false;

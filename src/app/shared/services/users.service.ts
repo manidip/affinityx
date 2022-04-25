@@ -29,6 +29,10 @@ export class UsersService {
     return this.http.get<any>(`${environment.apiUrl}/wp/v2/users/roles`,{ params: {...options},observe: "response" })
   }
 
+  getDashboard(id:Number){
+    return this.http.get<any>(`${environment.apiUrl}/wp/v2/users/dashboard/${id}`,{ observe: "response" })
+  }
+
   insert(data:any){
     return this.http.post<any>(`${environment.apiUrl}/wp/v2/users/`,data);
   }

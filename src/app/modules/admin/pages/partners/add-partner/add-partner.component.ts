@@ -4,11 +4,9 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { SnotifyService } from 'ng-snotify';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DocumentService } from 'src/app/shared/services/document.service';
-import { IndustryVerticalService } from 'src/app/shared/services/industry-vertical.service';
+import { forkJoin } from 'rxjs';
+import { DashboardLayoutService } from 'src/app/shared/services/dashboardLayout.service';
 import { PartnerService } from 'src/app/shared/services/partner.service';
-import { ProductService } from 'src/app/shared/services/product.service';
-import { ResourcesService } from 'src/app/shared/services/resources.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -23,6 +21,7 @@ export class AddPartnerComponent implements OnInit {
   products: any;
   resources: any;
   partners: any;
+  dashboards: any = [];
   industry_verticals: any;
   docTypes:string[] = ['img'];
   createForm : FormGroup = this.fb.group({});
@@ -38,13 +37,10 @@ export class AddPartnerComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
-    private productService: ProductService,
-    private resourcesService: ResourcesService,
     private partnerService: PartnerService,
-    private industryVerticalService: IndustryVerticalService,
-    private documentService: DocumentService,
     private snotifyService: SnotifyService,
     private titleService: Title,
+    private dashboardService: DashboardLayoutService
 
   ) { 
     this.createForm = this.fb.group({
@@ -52,6 +48,7 @@ export class AddPartnerComponent implements OnInit {
       color_scheme:  ['',[Validators.required]],
       partner_code:  ['',[Validators.required]],
       contact_persons:  ['',[Validators.required]],
+      dashboard:  ['',[Validators.required]],
       logo: ['', [Validators.required]],
       banner_image: ['', [Validators.required]],
     });
@@ -75,16 +72,31 @@ export class AddPartnerComponent implements OnInit {
       this.createForm.controls['banner_image'].setErrors(null);     
     }
 
-    this.partnerService.getBy({'post':this.editId}).subscribe((partner) => {
+    let requests =  [
+      this.dashboardService.getAll({}),
+    ];
+
+    if(this.editingItem){
+      requests.push(this.partnerService.getBy({'post':this.editId}));
+    }
+
+    forkJoin(requests).subscribe((results) => {
       
-      this.currentItem = partner.body;
-      this.createForm.patchValue({
-        title:this.currentItem.title,
-        color_scheme:  this.currentItem.color_scheme,
-        partner_code:  this.currentItem.partner_code,
-        contact_persons:  this.currentItem.contact_persons,
-      });
+      if(this.editingItem && results[1].body){
+        
+        this.currentItem = results[1].body;
+        this.createForm.patchValue({
+          title:this.currentItem.title,
+          color_scheme:  this.currentItem.color_scheme,
+          partner_code:  this.currentItem.partner_code,
+          dashboard:this.currentItem.dashboard,
+          contact_persons:  this.currentItem.contact_persons,
+        });
+
+      }
+    
       this.spinner.hide();
+      this.dashboards = results[0].body.map((dashboard:any) => ({id: dashboard.id,text: dashboard.title}));
 
     })
 
@@ -121,18 +133,17 @@ export class AddPartnerComponent implements OnInit {
       } 
     }
 
-    this.spinner.show();
-
+    this.spinner.show('formSubmit');
     this.partnerService.insert_or_update(uploadData,this.editId).subscribe({
       next: (response) => {
-        this.spinner.hide();
+        this.spinner.hide('formSubmit');
         this.snotifyService.success(response.message, {...environment.toastConfig,timeout:1000});
           setTimeout(() => {
             window.location.reload()
           }, 1500);
        },
        error: (response) => {
-        this.spinner.hide();
+        this.spinner.hide('formSubmit');
         this.snotifyService.error(response.message, {...environment.toastConfig,timeout:1000});
         setTimeout(() => {
           this.submitted = false;

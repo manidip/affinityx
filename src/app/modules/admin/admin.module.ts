@@ -9,9 +9,10 @@ import {
   AdminComponent,DashboardComponent,DocumentsComponent, 
   AddDocumentComponent,ViewDocumentComponent,
   ProductsComponent,ResourcesComponent,PartnersComponent,
-  UsersComponent,AddUserComponent
+  UsersComponent,AddUserComponent,AddPartnerComponent,AddResourceComponent,
+  DashboardLayoutsComponent, AddDashboardLayoutsComponent
 } from './pages';
-import { AddPartnerComponent } from './pages/partners/add-partner/add-partner.component';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +27,9 @@ import { AddPartnerComponent } from './pages/partners/add-partner/add-partner.co
     ProductsComponent,
     AddUserComponent,
     AddPartnerComponent,
+    AddResourceComponent,
+    DashboardLayoutsComponent,
+    AddDashboardLayoutsComponent,
   ],
   imports: [
     CommonModule,

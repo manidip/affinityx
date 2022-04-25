@@ -6,16 +6,18 @@ import { SnotifyService } from 'ng-snotify';
 import {Title} from "@angular/platform-browser";
 import { TokenStorageService } from 'src/app/modules/authentication/services/token-storage.service';
 import { User } from 'src/app/shared/models/user';
-import { ResourceService } from 'src/app/shared/services/resource.service';
-@Component({
-  selector: 'app-resources',
-  templateUrl: './resourses.component.html',
-  styleUrls: ['./resourses.component.css']
-})
-export class ResourcesComponent implements OnInit {
+import { DashboardLayoutService } from 'src/app/shared/services/dashboardLayout.service';
 
-  pageTitle = "List of Resources";
-  resources:any;
+@Component({
+  selector: 'app-dashboard-layouts',
+  templateUrl: './dashboard-layouts.component.html',
+  styleUrls: ['./dashboard-layouts.component.css']
+})
+export class DashboardLayoutsComponent implements OnInit {
+
+
+  pageTitle = "List of Dashboards";
+  dashboardLayouts:any;
   currentUser: User | any;
   filterForm : FormGroup;
   notFoundMessage = "No Resource Found";
@@ -27,7 +29,7 @@ export class ResourcesComponent implements OnInit {
   constructor( 
     private titleService: Title,
     private fb: FormBuilder,
-    private resourceService: ResourceService,
+    private dashboardLayoutService: DashboardLayoutService,
     private spinner: NgxSpinnerService,
     private snotifyService: SnotifyService,
     private tokenStorageService: TokenStorageService
@@ -36,7 +38,7 @@ export class ResourcesComponent implements OnInit {
       if(this.tokenStorageService.getUser()){
         this.currentUser = this.tokenStorageService.getUser()
       }
-      this.headerLinks = [{ title : 'Add', url : '/admin/resources/add',hasPermission:this.currentUser?.isAdmin}];
+      this.headerLinks = [{ title : 'Add', url : '/admin/dashboard-layouts/add',hasPermission:this.currentUser?.isAdmin}];
 
       this.filterForm = this.fb.group({
         search: ['',[Validators.required]]
@@ -46,10 +48,10 @@ export class ResourcesComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.getResources();
+    this.getDashboardLayouts();
   }
 
-  public getResources(options?: any) {
+  public getDashboardLayouts(options?: any) {
     this.spinner.show();
 
     let formValue = { ...this.filterForm.value };
@@ -69,17 +71,17 @@ export class ResourcesComponent implements OnInit {
       }
     }
 
-    return this.resourceService.getAll({...formValue,per_page:this.perPage,...options}).subscribe(response => {
+    return this.dashboardLayoutService.getAll({...formValue,per_page:this.perPage,...options}).subscribe(response => {
       let pageCount = response.headers.get('X-WP-TotalPages');
       this.total = Number(pageCount);
       this.spinner.hide();
-      this.resources = response.body;
+      this.dashboardLayouts = response.body;
    });
   }
 
   onSubmit(){
     this.current =  1
-    this.getResources();
+    this.getDashboardLayouts();
   }
 
   public onGoTo(page: number): void {
@@ -88,26 +90,26 @@ export class ResourcesComponent implements OnInit {
 
   public onNext(page: number): void {
     this.current = page + 1
-    this.getResources({page:this.current});
+    this.getDashboardLayouts({page:this.current});
   }
   public onPrevious(page: number): void {
     this.current = page - 1
-    this.getResources({page:this.current});
+    this.getDashboardLayouts({page:this.current});
   }
   
   onsearKeyword(value){
     if(value.length == 0) this.onSubmit();
   }
 
-  delete(resource){
+  delete(dashboard){
     this.snotifyService.confirm('Are you sure...', {...environment.toastConfig,timeout:5000,pauseOnHover: true,buttons: [
       {text: 'Yes', action: (toast) => {
         this.spinner.show();
         this.snotifyService.remove(toast.id)
-        this.resourceService.delete(resource).subscribe({
+        this.dashboardLayoutService.delete(dashboard).subscribe({
          next:(response) => {
           this.spinner.hide();
-          this.getResources();
+          this.getDashboardLayouts();
           this.snotifyService.success(response, {...environment.toastConfig,timeout:1000});
          }, 
          error: (response) => {
@@ -120,5 +122,4 @@ export class ResourcesComponent implements OnInit {
     ]});
 
   }
-
 }

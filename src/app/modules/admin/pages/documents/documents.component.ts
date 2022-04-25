@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ProductService } from '../../../../shared/services/product.service';
 import { DocumentService } from '../../../../shared/services/document.service';
-import { ResourcesService } from '../../../../shared/services/resources.service';
+import { ResourceService } from '../../../../shared/services/resource.service';
 import { PartnerService } from '../../../../shared/services/partner.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { forkJoin } from 'rxjs';
 import { SnotifyService } from 'ng-snotify';
 import {Title} from "@angular/platform-browser";
 import { TokenStorageService } from 'src/app/modules/authentication/services/token-storage.service';
 import { User } from 'src/app/shared/models/user';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-documents',
@@ -42,16 +43,25 @@ export class DocumentsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private documentService: DocumentService,
     private productService: ProductService,
-    private resourcesService: ResourcesService,
+    private resourceService: ResourceService,
     private partnerService: PartnerService,
     private snotifyService: SnotifyService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private route: ActivatedRoute,
     ) { 
       this.titleService.setTitle(this.pageTitle);
       if(this.tokenStorageService.getUser()){
         this.currentUser = this.tokenStorageService.getUser()
       }
        this.headerLinks = [{ title : 'Add', url : '/admin/documents/add',hasPermission:this.currentUser?.isAdmin}];
+
+       this.filterForm = this.fb.group({
+        search: [''],
+        product: ['',],
+        resource : [''],
+        partner: ['']
+      })
+
     }
 
 
@@ -59,19 +69,14 @@ export class DocumentsComponent implements OnInit {
     
     this.spinner.show();
 
-    this.filterForm = this.fb.group({
-      search: [''],
-      product: ['',],
-      resource : [''],
-      partner: ['']
-    })
-    
+    let searchString = (this.route.snapshot.queryParams['search']) ? this.route.snapshot.queryParams['search'] : '';
+    this.filterForm.patchValue({search:searchString});
 
     forkJoin(
       [
         this.productService.getAll(),
         this.partnerService.getAll({}),
-        this.resourcesService.getAll()
+        this.resourceService.getAll({})
       ]).subscribe((
         [
           products, 

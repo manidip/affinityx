@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -48,4 +49,15 @@ export class DocumentService {
     return this.http.delete<any>(`${environment.apiUrl}/wp/v2/documents/${item.id}`);
   }
 
+  download(id:Number){
+    return this.http.get(`${environment.apiUrl}/wp/v2/documents/download/${id}`,{observe: 'response',responseType: 'blob'})
+    // .pipe(
+    //   map((response: any) => {
+    //     let data = {
+    //       file: new Blob([response.body], {type: response.headers.get('Content-Type')}),
+    //    }
+    //     return data ;
+    //   })
+    // )
+  }
 }

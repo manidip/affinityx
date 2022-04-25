@@ -29,7 +29,7 @@ export class PartnersComponent implements OnInit {
   constructor( 
     private titleService: Title,
     private fb: FormBuilder,
-    private PartnersService: PartnerService,
+    private partnersService: PartnerService,
     private spinner: NgxSpinnerService,
     private snotifyService: SnotifyService,
     private tokenStorageService: TokenStorageService
@@ -71,7 +71,7 @@ export class PartnersComponent implements OnInit {
       }
     }
 
-    return this.PartnersService.getAll({...formValue,per_page:this.perPage,...options}).subscribe(response => {
+    return this.partnersService.getAll({...formValue,per_page:this.perPage,...options}).subscribe(response => {
       let pageCount = response.headers.get('X-WP-TotalPages');
       this.total = Number(pageCount);
       this.spinner.hide();
@@ -106,7 +106,7 @@ export class PartnersComponent implements OnInit {
       {text: 'Yes', action: (toast) => {
         this.spinner.show();
         this.snotifyService.remove(toast.id)
-        this.PartnersService.delete(user).subscribe({
+        this.partnersService.delete(user).subscribe({
          next:(response) => {
           this.spinner.hide();
           this.getPartners();

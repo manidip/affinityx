@@ -11,7 +11,9 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       { path: 'dashboard',  component: UserDashboardComponent},
-      { path: 'documents/:resourceSlug',  component: UserDocumentsComponent}
+      { path: 'documents/:resourceSlug',  component: UserDocumentsComponent},
+      {path: 'documents', redirectTo: 'dashboard', pathMatch: 'full'},
+      { path: '**', redirectTo: 'dashboard' }
     ]
   },
 ];

@@ -1,0 +1,24 @@
+<app-in-page-header title="Manage Partners" group="Tools" [links]="headerLinks"></app-in-page-header>
+<app-header-title [title]="pageTitle"></app-header-title>
+
+<form action="#" [formGroup]="createForm"  method="POST" (ngSubmit)="onSubmit()">
+    <input type="hidden" name="resource_fields[action]" value="add">
+            <div class="row" style="margin-top: 10px;">
+        <div class="col-md-2 ax_form_column ax_form_column_border_right">
+            <label class="ax_text_input_label" for="name">Name</label>:
+        </div>
+        <div class="col-md-5 ax_form_column_border_right">
+            <input formControlName="title" type="text" value="" name="resource_fields[title]" id="name" class="form-control form-control-sm ax_text_input" autocomplete="off">
+        </div>
+        <div class="col-md-5 ax_form_column">Alphanumeric</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2" style="margin-top: 10px; text-align: left;"></div>
+        <div class="col-md-10" style="margin-top: 10px; text-align: left;">
+            <button [disabled]="submitted" type="submit" name="submit" class="btn btn-outline-warning btn-lg">
+				{{editingItem ? 'Update' : 'Add'}}
+			</button>
+    </div>
+ </div>
+</form>

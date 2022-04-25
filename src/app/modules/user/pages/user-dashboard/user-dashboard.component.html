@@ -1,24 +1,55 @@
-<div class="row ax_row_tables partner-dashboard">
-    <div class="col-md-8">
-        <div class="top-name in-page-header">
-            <h2>Nice To See You Again, <span class="dname">Rain!</span></h2>
-            <h3>Thanks for being and Affinityx Partner</h3>
-        </div>
-        <p class="bottom-text mt-3 mb-5">Here you'll find the tools and resources you need to be successful.</p>
-        <div class="row mt-5 ">
-            <div class="col-md-6"><p>Industry Pre-Call  Prep Sheets</p></div>
-            <div class="col-md-6"> <img src="assets/images/dashboard-image.png"></div>
-        </div>
-        <div class="row mt-5">
-            <div class="col-md-6"><p>Top Downloads</p></div>
-            <div class="col-md-6">
-                <ul class="top-downloads">
-                    <li><a href="#" (click)="$event.preventDefault()">Cannabis Case Study</a> </li>
-                    <li><a href="#" (click)="$event.preventDefault()">Snapchat New Product</a> </li>
-                </ul>
-            </div>
-        </div>
-
-
-    </div>
+<div class="dashboard-alert" *ngIf="layout && layout.alert.show_hide"> <span class="fas fa-exclamation-circle"></span>
+	<div class="alert-content">
+		<div class="alert-head" *ngIf="layout.alert.alert_title">{{layout.alert.alert_title}}</div>
+		<div class="alert-body" *ngIf="layout.alert.alert_body" [innerHTML]="layout.alert.alert_body | safeHtml"></div>
+	</div>
+</div>
+<div class="row ax_row_tables partner-dashboard" *ngIf="layout">
+	<div class="col-md-7">
+		<div class="logo" *ngIf="layout.logo"> <img src="{{layout.logo}}"> </div>
+		<div class="welcome-text"  *ngIf="layout.welcome.show_hide" [innerHTML]="layout.welcome.welcome_text | safeHtml">
+			
+		</div>
+		<div class="search" *ngIf="layout.show_hide_search">
+			<div class="search-title"> Search the Partner Resource Center</div>
+			<form class="" method="get" [formGroup]="searchForm" (keyup.enter) = "onSearchSubmit()">
+				<div class="form-group has-search"> 
+                    <span class="fa fa-search form-control-feedback"></span>
+					<input name="afsearch" class="form-control" type="text" formControlName = "search" placeholder="Search Resources"> 
+                </div>
+			</form>
+		</div>
+		<h2 class="cta-title" *ngIf="layout.cta_buttons.show_hide && layout.cta_buttons.heading">Industry Pre-Call Prep Sheets</h2>
+		<div class="row mt-3 mb-5" *ngIf="layout.cta_buttons.buttons">
+			<div class="col-md-1"></div>
+			<div class="col-md-5">
+				<div class="cta-button"><a href="javascript:void()">Country: USA <span class="fas fa-chevron-circle-right"></span></a></div>
+			</div>
+			<div class="col-md-5">
+				<div class="cta-button"><a href="javascript:void()">Country: Canada <span class="fas fa-chevron-circle-right"></span></a></div>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+		<h2 class="cta-title" *ngIf="layout.show_hide_top_downloads">Top Downloads</h2>
+		<div class="row mt-3 mb-5" *ngIf="layout.show_hide_top_downloads">
+			<div class="col-md-1"></div>
+			<div class="col-md-5">
+				<div class="cta-button"><a onclick="window.location.href = this.getAttribute('data-href');" href="javascript:void();" data-href="https://affinityx.dev-ss-pro.com/wp-admin/admin-ajax.php?action=affinityx_get_document_file&amp;type=download&amp;nocount=1&amp;id=200">Shaw Media Communications Titan Google Analytics Access <span class="far fa-arrow-alt-circle-down"></span></a></div>
+			</div>
+			<div class="col-md-5">
+				<div class="cta-button"><a onclick="window.location.href = this.getAttribute('data-href');" href="javascript:void();" data-href="https://affinityx.dev-ss-pro.com/wp-admin/admin-ajax.php?action=affinityx_get_document_file&amp;type=download&amp;nocount=1&amp;id=279">SaveOn Cannabis One Sheet <span class="far fa-arrow-alt-circle-down"></span></a></div>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+		<hr>
+		<div class="social-icons" *ngIf="layout.social_icons.show_hide">
+			<ul>
+				<li><a href="{{layout.social_icons.facebook}}" *ngIf="layout.social_icons.facebook"><span class="fab fa-facebook-f"></span></a> </li>
+				<li><a href="{{layout.social_icons.twitter}}" *ngIf="layout.social_icons.twitter"><span class="fab fa-twitter"></span></a> </li>
+				<li><a href="{{layout.social_icons.linkdin}}" *ngIf="layout.social_icons.linkdin"><span class="fab fa-linkedin-in"></span></a> </li>
+				<li><a href="{{layout.social_icons.instagram}}" *ngIf="layout.social_icons.instagram"><span class="fab fa-instagram"></span></a> </li>
+                <li><a href="{{layout.social_icons.youtube}}" *ngIf="layout.social_icons.youtube"><span class="fab fa-youtube"></span></a> </li>
+			</ul>
+		</div>
+	</div>
 </div>

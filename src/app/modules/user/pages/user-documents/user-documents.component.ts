@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ProductService } from '../../../../shared/services/product.service';
 import { DocumentService } from '../../../../shared/services/document.service';
-import { ResourcesService } from '../../../../shared/services/resources.service';
+import { ResourceService } from '../../../../shared/services/resource.service';
 import { PartnerService } from '../../../../shared/services/partner.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { forkJoin } from 'rxjs';
 import {Title} from "@angular/platform-browser";
@@ -43,7 +43,7 @@ export class UserDocumentsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private documentService: DocumentService,
     private productService: ProductService,
-    private resourcesService: ResourcesService,
+    private resourceService: ResourceService,
     private partnerService: PartnerService,
     private tokenStorageService: TokenStorageService,
     private route: ActivatedRoute,
@@ -57,43 +57,40 @@ export class UserDocumentsComponent implements OnInit {
         this.currentUser = this.tokenStorageService.getUser()
       }  
 
+      this.filterForm = this.fb.group({
+        search: [''],
+        product: ['',],
+        resource : [''],
+        partner: ['']
+      })
+  
+
     }
 
   ngOnInit(): void {
     this.spinner.show();
-    this.resourceId = this.route.snapshot.params['resourceId'];
+    //this.resourceId = this.route.snapshot.params['resourceId'];
     this.resourceSlug = this.route.snapshot.params['resourceSlug'];
 
-    this.filterForm = this.fb.group({
-      search: [''],
-      product: ['',],
-      resource : [''],
-      partner: ['']
-    })
+    let searchString = (this.route.snapshot.queryParams['search']) ? this.route.snapshot.queryParams['search'] : '';
+    this.filterForm.patchValue({search:searchString});
 
-    forkJoin(
-      [
-        this.resourcesService.getBySlug({slug:this.resourceSlug}),
-        this.productService.getAll(),
-        this.partnerService.getAll(),
-        this.resourcesService.getAll()
-      ]).subscribe((
-        [
-          currentResource,
-          products, 
-          partners,
-          resourses
-        ]) => {
+  if(this.resourceSlug !== 'all' ){
+    this.resourceService.getBy({slug:this.resourceSlug}).subscribe((response) => {
+      if(response.body && this.resourceSlug !== 'all'){
+        this.filterForm.patchValue({resource:response.body[0].id});
+        this.pageTitle += ' : '+ response.body[0].title;
+      }
+    })
+  }
+
+  let requests = [this.productService.getAll(),this.partnerService.getAll({}),this.resourceService.getAll({})]
+    forkJoin(requests).subscribe(([ products,partners, resourses]) => {
 
       this.products = products.body.map((product:any) => ({id: product.id,text: product.title}))
       this.partners = partners.body.map((product:any) => ({id: product.id,text: product.title}));
       this.resources = resourses.body.map((product:any) => ({id: product.id,text: product.title}));
       
-      if(currentResource.body){
-        this.filterForm.patchValue({resource:currentResource.body[0].id});
-        this.pageTitle += ' : '+ currentResource.body[0].title;
-      }
-  
       if(!this.currentUser.isAdmin){
         this.filterForm.patchValue({partner:this.currentUser.partner[0].id});
       }
@@ -112,7 +109,7 @@ export class UserDocumentsComponent implements OnInit {
   }
 
   public onFilter() {
-    //this.onSubmit();
+    this.onSubmit();
   }
 
   public onGoTo(page: number): void {
@@ -159,5 +156,48 @@ export class UserDocumentsComponent implements OnInit {
 
   identify(index:any, item:any) {
     return item.id;
+  }
+
+  // public downloadFile(data: HttpResponse<Blob>) {
+  //   const contentDisposition = data.headers.get('content-disposition');
+  //   const filename = this.getFilenameFromContentDisposition(contentDisposition);
+  //   const blob = data.body;
+  //   const url = window.URL.createObjectURL(blob);
+  //   const anchor = document.createElement("a");
+  //   anchor.download = filename;
+  //   anchor.href = url;
+  //   anchor.click();
+  // }
+
+  downloadFile(docId){
+      this.documentService.download(docId).subscribe((response:any): void => {
+
+       // const file = new Blob([blob], {type: 'application/pdf'});
+        //const fileURL = URL.createObjectURL(file);
+        //window.open(fileURL, '_blank', 'width=1000, height=800');
+
+      const contentDisposition = response.headers.get('content-disposition');
+      const filename = this.getFilenameFromContentDisposition(contentDisposition);
+      const blob = response.body;
+      const url = window.URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+
+      
+      // anchor.download = filename;
+      // anchor.href = url;
+      // anchor.click();
+
+      console.log(response)
+      })
+  }
+
+  private getFilenameFromContentDisposition(contentDisposition: string) {
+    const regex = /filename=(?<filename>[^,;]+);/g;
+    console.log(contentDisposition);
+
+    const match = regex.exec(contentDisposition);
+    
+    return match;
+    
   }
 }

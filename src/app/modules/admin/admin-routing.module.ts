@@ -5,7 +5,7 @@ import { AuthorizationGuard,AuthenticationGuard } from '../../shared/guards/';
 import { 
   AdminComponent,DashboardComponent,AddDocumentComponent,
   ViewDocumentComponent,DocumentsComponent,PartnersComponent, 
-  ProductsComponent,ResourcesComponent,UsersComponent,AddUserComponent,AddPartnerComponent
+  ProductsComponent,ResourcesComponent,UsersComponent,AddUserComponent,AddPartnerComponent,AddResourceComponent,DashboardLayoutsComponent, AddDashboardLayoutsComponent
 } from './pages';
 
 const routes: Routes = [
@@ -23,9 +23,15 @@ const routes: Routes = [
         { path: 'partners/add', component: AddPartnerComponent },
         { path: 'partners/edit/:id/:slug', component:  AddPartnerComponent },
         { path: 'partners', component: PartnersComponent},
+        { path: 'resources/add', component: AddResourceComponent },
+        { path: 'resources/edit/:id/:slug', component:  AddResourceComponent },
         { path: 'resources', component: ResourcesComponent},
         { path: 'products', component: ProductsComponent},
-      ]
+        { path: 'dashboard-layouts', component: DashboardLayoutsComponent },
+        { path: 'dashboard-layouts/add', component: AddDashboardLayoutsComponent },
+        { path: 'dashboard-layouts/edit/:id/:slug', component:  AddDashboardLayoutsComponent },
+        { path: '**', redirectTo: 'dashboard' }
+      ],
   },
 ];
 

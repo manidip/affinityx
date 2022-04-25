@@ -6,7 +6,7 @@ import { RouteGuard } from './shared/guards/route.guard';
 
 const routes: Routes = [
   {path:"",component:AppComponent,canActivate:[RouteGuard]},
-  {path:"unauthorized",component:NotAuthorizedComponent}
+  {path:"unauthorized",component:NotAuthorizedComponent},
 ];
 
 @NgModule({

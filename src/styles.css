@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 @import "../node_modules/ngx-spinner/animations/ball-scale-multiple.css"; 
+@import "../node_modules/ngx-spinner/animations/line-scale-pulse-out.css"; 
 
 /* cyrillic-ext */
 
@@ -737,3 +738,48 @@ select.form-control:focus,
 .ax_multicheckbox.select_all{column-count:1}
 .ax_multicheckbox.select_all .custom-control-input{margin: 0}
 a.btn,button.btn{margin-right: 5px;}
+embed {
+    height: 220px;
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+}
+
+.embed-overlay {
+    position: absolute;
+    background: rgba(0,0,0,0);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    cursor: pointer;
+}
+
+
+.action-btn-doc button {
+    width: 170px;
+    padding: 8px 5px;
+}
+
+.x-backgound {
+    position: fixed;
+    right: -11%;
+    bottom: 0%;
+    margin-bottom: -100px;
+    opacity: 0.4;
+    z-index: -555555;
+}
+img.x-bg {
+    max-width: 600px;
+}
+
+span.pname {
+    color: #00ccfb;
+}
+
+ng-select2.form-control {
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
