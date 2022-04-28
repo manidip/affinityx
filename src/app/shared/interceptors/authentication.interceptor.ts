@@ -19,8 +19,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     if (userDetails && userDetails.token  && isApiUrl) {
       request = request.clone({ 
         headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + userDetails.token),
-        params:(request.params ? request.params : new HttpParams())
-        .set('time', d.getTime())
+        params:(request.params ? request.params : new HttpParams()).set('time', d.getTime())
       });
     }
   

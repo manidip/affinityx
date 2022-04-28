@@ -45,7 +45,7 @@
                      <td>{{item.file?.size}}</td>
                      <td>{{item?.date|dateT}}</td>
                      <td style="text-align: center">
-                        <a href="{{item.file?.url}}" class="btn btn-sm btn-outline-warning" role="button" target="_blank"><i class="fa fa-eye"></i></a>
+                        <button (click) = "getFile(item.id)" class="btn btn-sm btn-outline-warning" role="button" target="_blank"><i class="fa fa-eye"></i></button>
                         <a [routerLink]="['/admin/documents/edit', item.id,item.slug]" class="btn btn-sm btn-outline-warning" role="button" target="_self"><i class="fas fa-edit"></i></a>
                         <button class="btn btn-sm btn-outline-warning" (click)="delete(item)"><i class="fas fa-trash-alt"></i> </button>
                      </td>

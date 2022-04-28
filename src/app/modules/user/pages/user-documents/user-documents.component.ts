@@ -11,6 +11,8 @@ import {Title} from "@angular/platform-browser";
 import { TokenStorageService } from 'src/app/modules/authentication/services/token-storage.service';
 import { User } from 'src/app/shared/models/user';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpEventType } from '@angular/common/http';
+import { SnotifyService } from 'ng-snotify';
 
 @Component({
   selector: 'app-user-documents',
@@ -48,6 +50,7 @@ export class UserDocumentsComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private route: ActivatedRoute,
     private router: Router,
+    private snotifyService: SnotifyService,
     ) { 
       this.titleService.setTitle(this.pageTitle);
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -157,47 +160,40 @@ export class UserDocumentsComponent implements OnInit {
   identify(index:any, item:any) {
     return item.id;
   }
-
-  // public downloadFile(data: HttpResponse<Blob>) {
-  //   const contentDisposition = data.headers.get('content-disposition');
-  //   const filename = this.getFilenameFromContentDisposition(contentDisposition);
-  //   const blob = data.body;
-  //   const url = window.URL.createObjectURL(blob);
-  //   const anchor = document.createElement("a");
-  //   anchor.download = filename;
-  //   anchor.href = url;
-  //   anchor.click();
-  // }
-
-  downloadFile(docId){
-      this.documentService.download(docId).subscribe((response:any): void => {
-
-       // const file = new Blob([blob], {type: 'application/pdf'});
-        //const fileURL = URL.createObjectURL(file);
-        //window.open(fileURL, '_blank', 'width=1000, height=800');
-
-      const contentDisposition = response.headers.get('content-disposition');
-      const filename = this.getFilenameFromContentDisposition(contentDisposition);
-      const blob = response.body;
-      const url = window.URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-
-      
-      // anchor.download = filename;
-      // anchor.href = url;
-      // anchor.click();
-
-      console.log(response)
+  
+  getFile(docId,type = 'view'){
+    let toast =  this.snotifyService.info("Preparing File...", {...environment.toastConfig,timeout:0});
+    this.documentService.download(docId).subscribe((response:any): void => {
+        
+        if (response.type === HttpEventType.DownloadProgress) {
+          toast.body = "Preparing File..." + Math.round(100 * response.loaded / response.total) + "%";
+        }else if (response.type === HttpEventType.Response) {
+          this.snotifyService.remove(toast.id)
+          
+          if(type == 'view'){
+            const file = new Blob([response.body], {type: 'application/pdf'});
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL, '_blank', 'width=1000, height=800');
+          }else{
+            const blob = response.body;
+            const url = window.URL.createObjectURL(blob);
+            const anchor = document.createElement("a");
+            anchor.download = response.headers.get('Affy-File-Name');
+            //anchor.download = this.getFilenameFromHeader(response.headers);
+            anchor.href = url;
+            anchor.click();
+          }
+        }
       })
   }
 
-  private getFilenameFromContentDisposition(contentDisposition: string) {
-    const regex = /filename=(?<filename>[^,;]+);/g;
-    console.log(contentDisposition);
+  shareFile(docId){
 
-    const match = regex.exec(contentDisposition);
-    
-    return match;
-    
   }
+
+  // private getFilenameFromHeader(headers) {
+  //   let contentDispositionHeader = headers.get('content-disposition');
+  //   const filename = contentDispositionHeader.split(';')[1].split('=')[1];
+  //   return filename;
+  // }
 }

@@ -1,17 +1,19 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthorizationGuard,AuthenticationGuard } from '../../shared/guards/';
 import { 
-  AdminComponent,DashboardComponent,AddDocumentComponent,
+  AdminComponent, DashboardComponent,AddDocumentComponent,
   ViewDocumentComponent,DocumentsComponent,PartnersComponent, 
-  ProductsComponent,ResourcesComponent,UsersComponent,AddUserComponent,AddPartnerComponent,AddResourceComponent,DashboardLayoutsComponent, AddDashboardLayoutsComponent
+  ProductsComponent,ResourcesComponent,UsersComponent,AddUserComponent,AddPartnerComponent,
+  AddResourceComponent,DashboardLayoutsComponent, AddDashboardLayoutsComponent
 } from './pages';
 
+import { AuthorizationGuard,AuthenticationGuard } from '../../shared/guards';
+
+
 const routes: Routes = [
-  { path: 'admin', component: AdminComponent,canActivateChild:[AuthenticationGuard,AuthorizationGuard],
-      children :[
-        {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      { path: '', redirectTo: 'dashboard',pathMatch: 'full'},
+      {path: '', component: AdminComponent,canActivateChild:[AuthenticationGuard,AuthorizationGuard],children: [
         { path: 'dashboard', component: DashboardComponent },
         { path: 'documents/edit/:id/:slug', component: AddDocumentComponent },
         { path: 'documents/add', component: AddDocumentComponent },
@@ -30,9 +32,8 @@ const routes: Routes = [
         { path: 'dashboard-layouts', component: DashboardLayoutsComponent },
         { path: 'dashboard-layouts/add', component: AddDashboardLayoutsComponent },
         { path: 'dashboard-layouts/edit/:id/:slug', component:  AddDashboardLayoutsComponent },
-        { path: '**', redirectTo: 'dashboard' }
-      ],
-  },
+    ]},
+    
 ];
 
 @NgModule({

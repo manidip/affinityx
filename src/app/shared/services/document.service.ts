@@ -50,7 +50,7 @@ export class DocumentService {
   }
 
   download(id:Number){
-    return this.http.get(`${environment.apiUrl}/wp/v2/documents/download/${id}`,{observe: 'response',responseType: 'blob'})
+    return this.http.get(`${environment.apiUrl}/wp/v2/documents/download/${id}`,{observe: 'events',responseType: 'blob',reportProgress: true})
     // .pipe(
     //   map((response: any) => {
     //     let data = {

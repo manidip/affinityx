@@ -5,8 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SnotifyService } from 'ng-snotify';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
-import { DashboardLayoutService } from 'src/app/shared/services/dashboardLayout.service';
-import { PartnerService } from 'src/app/shared/services/partner.service';
+import { DashboardLayoutService,PartnerService } from 'src/app/shared/services';
 import { environment } from 'src/environments/environment';
 
 @Component({

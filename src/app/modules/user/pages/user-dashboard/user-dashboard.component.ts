@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TokenStorageService } from 'src/app/modules/authentication/services/token-storage.service';
 import { UsersService } from 'src/app/shared/services/users.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SnotifyService } from 'ng-snotify';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -12,16 +14,17 @@ import { Router } from '@angular/router';
 })
 export class UserDashboardComponent implements OnInit {
 
-  layout;
-  currentUser;
-  searchForm;
+  layout: any;
+  currentUser: any;
+  searchForm: FormGroup;
 
   constructor( 
     private tokenStorageService: TokenStorageService,
     private userService: UsersService,
     private spinner: NgxSpinnerService,
     private fb:FormBuilder,
-    private router: Router
+    private router: Router,
+    private snotifyService: SnotifyService,
     ) { 
       this.currentUser = this.tokenStorageService.getUser();
       this.searchForm = this.fb.group({
@@ -49,6 +52,10 @@ export class UserDashboardComponent implements OnInit {
   }
 
   onSearchSubmit(){
+    if(this.searchForm['controls']['search'].value.length < 3){
+      this.snotifyService.info("Please enter at least 3 characters", {...environment.toastConfig,timeout:1500});
+      return;
+    }
     this.router.navigate(['/user/documents/all'],{ queryParams: this.searchForm.value });
   }
 }

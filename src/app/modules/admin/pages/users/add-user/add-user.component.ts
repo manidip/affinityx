@@ -5,10 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { SnotifyService } from 'ng-snotify';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
-import { PartnerService } from 'src/app/shared/services/partner.service';
-import { UsersService } from 'src/app/shared/services/users.service';
-import { minLengthIfHasValue } from 'src/app/shared/validators/minLengthIfHasValue';
-import { usernameExists } from 'src/app/shared/validators/usernameExists';
+import { PartnerService,UsersService } from 'src/app/shared/services';
+import { usernameExists } from 'src/app/shared/validators';
 import { environment } from 'src/environments/environment';
 
 @Component({

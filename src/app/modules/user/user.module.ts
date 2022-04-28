@@ -1,13 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { UserRoutingModule } from './user-routing.module';
-import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.component';
-import { UsersFrontendComponent } from './pages/users-frontend.component';
+import { UserDashboardComponent,UserDocumentsComponent,UsersFrontendComponent } from './pages';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { UserDocumentsComponent } from './pages/user-documents/user-documents.component';
-import { NgSelect2Module } from 'ng-select2';
-import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,10 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserDocumentsComponent,
   ],
   imports: [
-    CommonModule,
-    NgSelect2Module,
     UserRoutingModule,
-    ReactiveFormsModule,
     SharedModule
   ]
 })

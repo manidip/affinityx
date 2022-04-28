@@ -20,35 +20,30 @@
 			</form>
 		</div>
 		<h2 class="cta-title" *ngIf="layout.cta_buttons.show_hide && layout.cta_buttons.heading">Industry Pre-Call Prep Sheets</h2>
-		<div class="row mt-3 mb-5" *ngIf="layout.cta_buttons.buttons">
-			<div class="col-md-1"></div>
-			<div class="col-md-5">
-				<div class="cta-button"><a href="javascript:void()">Country: USA <span class="fas fa-chevron-circle-right"></span></a></div>
-			</div>
-			<div class="col-md-5">
-				<div class="cta-button"><a href="javascript:void()">Country: Canada <span class="fas fa-chevron-circle-right"></span></a></div>
-			</div>
-			<div class="col-md-1"></div>
+		<div class="row mt-3 mb-5 justify-content-center" *ngIf="layout.cta_buttons.buttons">
+			<ng-container *ngFor="let ctab of layout.cta_buttons.buttons,let i=index;">
+				<div class="col-md-5">
+					<div class="cta-button"><a href="javascript:void()">Country: USA <span class="fas fa-chevron-circle-right"></span></a></div>
+				</div>
+			</ng-container>
 		</div>
 		<h2 class="cta-title" *ngIf="layout.show_hide_top_downloads">Top Downloads</h2>
-		<div class="row mt-3 mb-5" *ngIf="layout.show_hide_top_downloads">
-			<div class="col-md-1"></div>
+		<div class="row mt-3 mb-5 justify-content-center" *ngIf="layout.show_hide_top_downloads">
 			<div class="col-md-5">
 				<div class="cta-button"><a onclick="window.location.href = this.getAttribute('data-href');" href="javascript:void();" data-href="https://affinityx.dev-ss-pro.com/wp-admin/admin-ajax.php?action=affinityx_get_document_file&amp;type=download&amp;nocount=1&amp;id=200">Shaw Media Communications Titan Google Analytics Access <span class="far fa-arrow-alt-circle-down"></span></a></div>
 			</div>
 			<div class="col-md-5">
 				<div class="cta-button"><a onclick="window.location.href = this.getAttribute('data-href');" href="javascript:void();" data-href="https://affinityx.dev-ss-pro.com/wp-admin/admin-ajax.php?action=affinityx_get_document_file&amp;type=download&amp;nocount=1&amp;id=279">SaveOn Cannabis One Sheet <span class="far fa-arrow-alt-circle-down"></span></a></div>
 			</div>
-			<div class="col-md-1"></div>
 		</div>
 		<hr>
 		<div class="social-icons" *ngIf="layout.social_icons.show_hide">
 			<ul>
-				<li><a href="{{layout.social_icons.facebook}}" *ngIf="layout.social_icons.facebook"><span class="fab fa-facebook-f"></span></a> </li>
-				<li><a href="{{layout.social_icons.twitter}}" *ngIf="layout.social_icons.twitter"><span class="fab fa-twitter"></span></a> </li>
-				<li><a href="{{layout.social_icons.linkdin}}" *ngIf="layout.social_icons.linkdin"><span class="fab fa-linkedin-in"></span></a> </li>
-				<li><a href="{{layout.social_icons.instagram}}" *ngIf="layout.social_icons.instagram"><span class="fab fa-instagram"></span></a> </li>
-                <li><a href="{{layout.social_icons.youtube}}" *ngIf="layout.social_icons.youtube"><span class="fab fa-youtube"></span></a> </li>
+				<li *ngIf="layout.social_icons.facebook"><a target="_blank" href="{{layout.social_icons.facebook}}"><span class="fab fa-facebook-f"></span></a> </li>
+				<li *ngIf="layout.social_icons.twitter"><a target="_blank" href="{{layout.social_icons.twitter}}"><span class="fab fa-twitter"></span></a> </li>
+				<li *ngIf="layout.social_icons.linkdin"><a target="_blank" href="{{layout.social_icons.linkdin}}"><span class="fab fa-linkedin-in"></span></a> </li>
+				<li *ngIf="layout.social_icons.instagram"><a target="_blank" href="{{layout.social_icons.instagram}}"><span class="fab fa-instagram"></span></a> </li>
+                <li *ngIf="layout.social_icons.youtube"><a href="{{layout.social_icons.youtube}}"><span class="fab fa-youtube"></span></a> </li>
 			</ul>
 		</div>
 	</div>

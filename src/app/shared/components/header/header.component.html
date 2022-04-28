@@ -2,7 +2,7 @@
 	<div id="ax_logo_icon_nav" class="row"> <img class="axpp_nav_logo_ax_x" src="/assets/images/logo_ax_x-colored_50x50.png" width="30px"> </div>
 	<div class="row axpp_nav_header">
 		<div class="col-sm-3 axpp_nav_header_pic">
-			<a [routerLink]="['/admin/dashboard']" class="img profile_pic rounded-circle" style="background-image: url('/assets/images/default_profile-pic-1.jpg');"></a>
+			<a [routerLink]="['/user/dashboard']" class="img profile_pic rounded-circle" style="background-image: url('/assets/images/default_profile-pic-1.jpg');"></a>
 		</div>
 		<div class="col-sm-9 axpp_nav_header_details" *ngIf="currentUser"> <span class="user_greeting">Hi, </span> <span class="ax_welcome_username" style="font-size: 16px;">
                {{currentUser.displayName}}

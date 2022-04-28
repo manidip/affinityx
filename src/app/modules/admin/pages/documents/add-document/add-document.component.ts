@@ -1,3 +1,4 @@
+import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -5,12 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { SnotifyService } from 'ng-snotify';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin, } from 'rxjs';
-import { DocumentService } from 'src/app/shared/services/document.service';
-import { IndustryVerticalService } from 'src/app/shared/services/industry-vertical.service';
-import { PartnerService } from 'src/app/shared/services/partner.service';
-import { ProductService } from 'src/app/shared/services/product.service';
-import { ResourceService } from 'src/app/shared/services/resource.service';
-import { minSelectedCheckboxes } from 'src/app/shared/validators/minSelectedCheckboxes';
+import { DocumentService,ResourceService,PartnerService,
+  ProductService,IndustryVerticalService } from '../../../../../shared/services';
+import { minSelectedCheckboxes } from 'src/app/shared/validators';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -27,7 +25,7 @@ export class AddDocumentComponent implements OnInit {
   partners: any;
   industry_verticals: any;
   docTypes:string[] = ['pdf'];
-  createForm : FormGroup = this.fb.group({});
+  createForm : FormGroup;
   submitted: boolean = false;
   editId:any;
   editingItem:any;
@@ -156,6 +154,33 @@ export class AddDocumentComponent implements OnInit {
     }
   }
 
+  getFile(type = 'view'){
+    if(!this.currentItem) return;
+    let toast =  this.snotifyService.info("Preparing File...", {...environment.toastConfig,timeout:0});
+    this.documentService.download(this.currentItem.id).subscribe((response:any): void => {
+        
+        if (response.type === HttpEventType.DownloadProgress) {
+          toast.body = "Preparing File..." + Math.round(100 * response.loaded / response.total) + "%";
+        }else if (response.type === HttpEventType.Response) {
+          this.snotifyService.remove(toast.id)
+          
+          if(type == 'view'){
+            const file = new Blob([response.body], {type: 'application/pdf'});
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL, '_blank', 'width=1000, height=800');
+          }else{
+            const blob = response.body;
+            const url = window.URL.createObjectURL(blob);
+            const anchor = document.createElement("a");
+            anchor.download = response.headers.get('Affy-File-Name');
+            //anchor.download = this.getFilenameFromHeader(response.headers);
+            anchor.href = url;
+            anchor.click();
+          }
+        }
+      })
+  }
+  
   onSubmit(){ 
 
     this.submitted = true;

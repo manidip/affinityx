@@ -6,3 +6,6 @@
     top: 50%;
     text-align: center;
 }
+.unauthorized img {
+    max-width: 100%;
+}

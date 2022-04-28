@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { SnotifyService } from 'ng-snotify';
 import {Title} from "@angular/platform-browser";
-import { TokenStorageService } from 'src/app/modules/authentication/services/token-storage.service';
+import { TokenStorageService } from 'src/app/modules/authentication/services';
 import { User } from 'src/app/shared/models/user';
-import { PartnerService } from 'src/app/shared/services/partner.service';
+import { PartnerService } from 'src/app/shared/services';
 
 
 @Component({

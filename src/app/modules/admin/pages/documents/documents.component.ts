@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
-import { ProductService } from '../../../../shared/services/product.service';
-import { DocumentService } from '../../../../shared/services/document.service';
-import { ResourceService } from '../../../../shared/services/resource.service';
-import { PartnerService } from '../../../../shared/services/partner.service';
+import { DocumentService,ResourceService,PartnerService,ProductService } from '../../../../shared/services';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { forkJoin } from 'rxjs';
 import { SnotifyService } from 'ng-snotify';
 import {Title} from "@angular/platform-browser";
-import { TokenStorageService } from 'src/app/modules/authentication/services/token-storage.service';
+import { TokenStorageService } from 'src/app/modules/authentication/services';
 import { User } from 'src/app/shared/models/user';
 import { ActivatedRoute } from '@angular/router';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-documents',
@@ -167,6 +165,32 @@ export class DocumentsComponent implements OnInit {
       }, bold: false},
       {text: 'No', action: (toast) => {this.snotifyService.remove(toast.id)}},
     ]});
+  }
+
+  getFile(docId,type = 'view'){
+    let toast =  this.snotifyService.info("Preparing File...", {...environment.toastConfig,timeout:0});
+    this.documentService.download(docId).subscribe((response:any): void => {
+        
+        if (response.type === HttpEventType.DownloadProgress) {
+          toast.body = "Preparing File..." + Math.round(100 * response.loaded / response.total) + "%";
+        }else if (response.type === HttpEventType.Response) {
+          this.snotifyService.remove(toast.id)
+          
+          if(type == 'view'){
+            const file = new Blob([response.body], {type: 'application/pdf'});
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL, '_blank', 'width=1000, height=800');
+          }else{
+            const blob = response.body;
+            const url = window.URL.createObjectURL(blob);
+            const anchor = document.createElement("a");
+            anchor.download = response.headers.get('Affy-File-Name');
+            //anchor.download = this.getFilenameFromHeader(response.headers);
+            anchor.href = url;
+            anchor.click();
+          }
+        }
+      })
   }
 
 

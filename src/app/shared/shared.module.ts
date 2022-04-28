@@ -1,30 +1,36 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
-import { PaginationComponent } from './components/pagination/pagination.component';
-import { NoResultComponent } from './components/no-result/no-result.component';
-import { InPageHeaderComponent } from './components/in-page-header/in-page-header.component';
-import { HeaderTitleComponent } from './components/header-title/header-title.component';
-import { DateTPipe } from "../shared/pipes/dateT";
-import { SafeHtmlPipe } from "../shared/pipes/safeHtml";
-import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
-import { ErrorComponent } from './components/error/error.component';
+import { DateTPipe,SafeHtmlPipe } from "../shared/pipes";
+import { HeaderComponent,FooterComponent,HeaderTitleComponent,InPageHeaderComponent,
+  NotAuthorizedComponent,ErrorComponent,PaginationComponent,NoResultComponent } 
+  from './components';
+import { NgSelect2Module } from 'ng-select2';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent, 
     PaginationComponent, 
-    NoResultComponent, InPageHeaderComponent, HeaderTitleComponent,DateTPipe,SafeHtmlPipe, NotAuthorizedComponent, ErrorComponent
+    NoResultComponent, 
+    InPageHeaderComponent, 
+    HeaderTitleComponent,
+    DateTPipe,
+    SafeHtmlPipe, 
+    NotAuthorizedComponent, 
+    ErrorComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    NgSelect2Module,
+    ReactiveFormsModule
   ],
   exports: [
+    CommonModule,
+    NgSelect2Module,
+    ReactiveFormsModule,
     HeaderComponent,
     FooterComponent,
     PaginationComponent,

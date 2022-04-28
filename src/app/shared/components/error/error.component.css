@@ -1,0 +1,13 @@
+.error404 {
+    color: #df0124;
+    width: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%,-50%);
+}
+span.errr-code {
+    font-size: 6em;
+    font-weight: 600;
+}

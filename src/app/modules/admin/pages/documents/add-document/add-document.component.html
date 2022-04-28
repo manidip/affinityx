@@ -143,7 +143,7 @@
 	<div class="row" >
 		<div class="col-md-2 ax_form_column ax_form_column_border_right"><span class="ax_text_input_label">Files</span>: <span class="ax_field_required"></span></div>
 		<div class="col-md-7 ax_form_column ax_form_column_border_right">
-			<p><a target="_blank" *ngIf="currentItem" href="{{currentItem?.file.url}}" download class="btn btn-sm btn-outline-warning" role="button">View File</a></p>
+			<p *ngIf="currentItem"><button type="button" (click)="getFile()" class="btn btn-sm btn-outline-warning" role="button" target="_blank"><i class="fa fa-eye"></i></button></p>
 			<input 
             type="file" 
             accept="application/pdf"

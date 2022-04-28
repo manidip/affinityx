@@ -4,8 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { SnotifyService } from 'ng-snotify';
 import { NgxSpinnerService } from 'ngx-spinner';
-
-import { DashboardLayoutService } from 'src/app/shared/services/dashboardLayout.service';
+import { DashboardLayoutService } from 'src/app/shared/services';
 import { environment } from 'src/environments/environment';
 
 @Component({

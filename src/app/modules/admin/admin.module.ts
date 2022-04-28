@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { AdminRoutingModule } from './admin-routing.module';
-import { NgSelect2Module } from 'ng-select2';
 import { SharedModule } from '../../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+
 import { 
   AdminComponent,DashboardComponent,DocumentsComponent, 
   AddDocumentComponent,ViewDocumentComponent,
@@ -32,12 +30,13 @@ import {
     AddDashboardLayoutsComponent,
   ],
   imports: [
-    CommonModule,
-    NgSelect2Module,
     ColorPickerModule,
     AdminRoutingModule,
-    ReactiveFormsModule,
     SharedModule
   ]
 })
-export class AdminModule { }
+export class AdminModule {
+  constructor(){
+    console.log("AdminModule");
+  }
+ }
