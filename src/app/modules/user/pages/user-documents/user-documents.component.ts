@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
-import { ProductService } from '../../../../shared/services/product.service';
-import { DocumentService } from '../../../../shared/services/document.service';
-import { ResourceService } from '../../../../shared/services/resource.service';
-import { PartnerService } from '../../../../shared/services/partner.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { ModalService,ProductService,DocumentService,ResourceService,PartnerService } from '../../../../shared/services/';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { forkJoin } from 'rxjs';
 import {Title} from "@angular/platform-browser";
-import { TokenStorageService } from 'src/app/modules/authentication/services/token-storage.service';
+import { TokenStorageService } from 'src/app/modules/authentication/services/';
 import { User } from 'src/app/shared/models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
@@ -27,11 +24,13 @@ export class UserDocumentsComponent implements OnInit {
   resources: any;
   partners: any;
   filterForm : FormGroup;
+  shareForm : FormGroup;
   currentUser: User | any;
   notFoundMessage = "No Documents Found";
   headerLinks:[{}] = [{}];
   resourceId;resourceSlug;
   isAdmin;
+  shareItem:number = 0;
 
 
   perPage = environment.documentsPerPage;
@@ -51,6 +50,7 @@ export class UserDocumentsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snotifyService: SnotifyService,
+    private modalService: ModalService
     ) { 
       this.titleService.setTitle(this.pageTitle);
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -59,6 +59,10 @@ export class UserDocumentsComponent implements OnInit {
       if(this.tokenStorageService.getUser()){
         this.currentUser = this.tokenStorageService.getUser()
       }  
+      this.shareForm = this.fb.group({
+        email: ['', [Validators.required]],
+        message: [''],
+      })
 
       this.filterForm = this.fb.group({
         search: [''],
@@ -66,8 +70,6 @@ export class UserDocumentsComponent implements OnInit {
         resource : [''],
         partner: ['']
       })
-  
-
     }
 
   ngOnInit(): void {
@@ -81,8 +83,8 @@ export class UserDocumentsComponent implements OnInit {
   if(this.resourceSlug !== 'all' ){
     this.resourceService.getBy({slug:this.resourceSlug}).subscribe((response) => {
       if(response.body && this.resourceSlug !== 'all'){
-        this.filterForm.patchValue({resource:response.body[0].id});
-        this.pageTitle += ' : '+ response.body[0].title;
+        this.filterForm.patchValue({resource:response.body[0]?.id});
+        this.pageTitle += ' : '+ response.body[0]?.title;
       }
     })
   }
@@ -99,7 +101,6 @@ export class UserDocumentsComponent implements OnInit {
       }
       this.getDocuments();
     });
-
   }
  
   public onSubmit(){
@@ -187,10 +188,18 @@ export class UserDocumentsComponent implements OnInit {
       })
   }
 
-  shareFile(docId){
-
+  shareDocModal(item){
+    this.shareItem = item.id;
+    this.modalService.open('shareDocModal');
+  }
+  closeModal(id: string) {
+    this.modalService.close(id);
   }
 
+shareDocSubmit(){
+  console.log(this.shareForm.value);
+  this.closeModal('shareDocModal');
+}
   // private getFilenameFromHeader(headers) {
   //   let contentDispositionHeader = headers.get('content-disposition');
   //   const filename = contentDispositionHeader.split(';')[1].split('=')[1];

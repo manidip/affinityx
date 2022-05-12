@@ -14,8 +14,8 @@ export class AppComponent {
     this.titleService.setTitle('Affinityx');
   }
 
-  ngOnInit() {  
-    
-  }  
+  ngOnInit() {}  
+
+  
   
 }

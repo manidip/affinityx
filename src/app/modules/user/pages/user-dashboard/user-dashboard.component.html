@@ -29,12 +29,11 @@
 		</div>
 		<h2 class="cta-title" *ngIf="layout.show_hide_top_downloads">Top Downloads</h2>
 		<div class="row mt-3 mb-5 justify-content-center" *ngIf="layout.show_hide_top_downloads">
-			<div class="col-md-5">
-				<div class="cta-button"><a onclick="window.location.href = this.getAttribute('data-href');" href="javascript:void();" data-href="https://affinityx.dev-ss-pro.com/wp-admin/admin-ajax.php?action=affinityx_get_document_file&amp;type=download&amp;nocount=1&amp;id=200">Shaw Media Communications Titan Google Analytics Access <span class="far fa-arrow-alt-circle-down"></span></a></div>
-			</div>
-			<div class="col-md-5">
-				<div class="cta-button"><a onclick="window.location.href = this.getAttribute('data-href');" href="javascript:void();" data-href="https://affinityx.dev-ss-pro.com/wp-admin/admin-ajax.php?action=affinityx_get_document_file&amp;type=download&amp;nocount=1&amp;id=279">SaveOn Cannabis One Sheet <span class="far fa-arrow-alt-circle-down"></span></a></div>
-			</div>
+			<ng-container *ngFor="let item of layout.top_downloads,let i=index;">
+				<div class="col-md-5">
+					<div class="cta-button"><button (click) = "getFile(item.document_id)">{{item.title}}<span class="far fa-arrow-alt-circle-down"></span></button></div>
+				</div>
+			</ng-container>
 		</div>
 		<hr>
 		<div class="social-icons" *ngIf="layout.social_icons.show_hide">

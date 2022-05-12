@@ -30,7 +30,7 @@ export class AddDocumentComponent implements OnInit {
   editId:any;
   editingItem:any;
   currentItem:any;
-  selectAllCheckbox:boolean = false;
+  selectAllCheckbox:boolean[] = [];
   headerLinks:any = [];
 
   constructor(
@@ -143,14 +143,16 @@ export class AddDocumentComponent implements OnInit {
   selectAll(type = ''): void {
 
     if(type == '') return;
-    this.selectAllCheckbox = !this.selectAllCheckbox;
     let control = this.createForm.get(type);
   
     if(control){
-      if (this.selectAllCheckbox) 
-      (control as FormArray).controls.map((control) => control.setValue(true))
-    else 
-      (control as FormArray).controls.map((control) => control.setValue(false))
+      if (!this.selectAllCheckbox.hasOwnProperty(type)){
+        this.selectAllCheckbox[type] = true;
+        (control as FormArray).controls.map((control) => control.setValue(true))
+      }else {
+        delete this.selectAllCheckbox[type];
+        (control as FormArray).controls.map((control) => control.setValue(false))
+      }
     }
   }
 

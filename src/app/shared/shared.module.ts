@@ -7,6 +7,7 @@ import { HeaderComponent,FooterComponent,HeaderTitleComponent,InPageHeaderCompon
   from './components';
 import { NgSelect2Module } from 'ng-select2';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ModalPopupComponent } from './components/modal-popup/modal-popup.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DateTPipe,
     SafeHtmlPipe, 
     NotAuthorizedComponent, 
-    ErrorComponent
+    ErrorComponent,
+    ModalPopupComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     InPageHeaderComponent,
     HeaderTitleComponent,
     DateTPipe,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    ModalPopupComponent
   ]
 })
 export class SharedModule { }

@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   logout($event): void {
     $event.stopPropagation();$event.preventDefault()
     this.tokenStorageService.logout();
-    this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.routerState.snapshot.url }});
+    this.router.navigate(['/auth/login'], { queryParams: { returnUrl: this.router.routerState.snapshot.url }});
  }
 
 }

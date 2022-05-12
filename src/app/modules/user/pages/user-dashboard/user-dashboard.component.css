@@ -90,7 +90,7 @@
     background: linear-gradient(to left, #d53a9d,#00ccfb);
 }
 
- .cta-button a {
+ .cta-button a,.cta-button button {
     color: #ffff;
     font-size: 17px;
     display: block;
@@ -102,8 +102,11 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    width: 100%;
+    border: 0;
+    background: none;
 }
- .cta-button a span {
+ .cta-button a span,.cta-button button span {
     color: #00ccfb;
     margin-left: 8px;
     position: absolute;
