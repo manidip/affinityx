@@ -25,7 +25,7 @@ export class ResourceService {
   getBySlug(options:any) {
     return this.http.get<any>(`${environment.apiUrl}/wp/v2/resources/`,{ params: {...options},observe: "response" });
   }
-  
+
   getBy(options?:any) {
     let post = options['post'];
     delete options['post'];

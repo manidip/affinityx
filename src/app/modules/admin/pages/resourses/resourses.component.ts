@@ -24,14 +24,14 @@ export class ResourcesComponent implements OnInit {
   current: number = 1;
   total: number = 1;
 
-  constructor( 
+  constructor(
     private titleService: Title,
     private fb: FormBuilder,
     private resourceService: ResourceService,
     private spinner: NgxSpinnerService,
     private snotifyService: SnotifyService,
     private tokenStorageService: TokenStorageService
-    ) { 
+    ) {
       this.titleService.setTitle(this.pageTitle);
       if(this.tokenStorageService.getUser()){
         this.currentUser = this.tokenStorageService.getUser()
@@ -58,7 +58,7 @@ export class ResourcesComponent implements OnInit {
       if (!formValue[prop]) {
         delete formValue[prop];
       }
-  
+
       if (Array.isArray(formValue[prop])) {
         let resultArray = formValue[prop].filter(item => item);
         if (resultArray.length > 0) {
@@ -84,7 +84,7 @@ export class ResourcesComponent implements OnInit {
 
   public onGoTo(page: number): void {
     this.current = page
-  } 
+  }
 
   public onNext(page: number): void {
     this.current = page + 1
@@ -94,7 +94,7 @@ export class ResourcesComponent implements OnInit {
     this.current = page - 1
     this.getResources({page:this.current});
   }
-  
+
   onsearKeyword(value){
     if(value.length == 0) this.onSubmit();
   }
@@ -109,7 +109,7 @@ export class ResourcesComponent implements OnInit {
           this.spinner.hide();
           this.getResources();
           this.snotifyService.success(response, {...environment.toastConfig,timeout:1000});
-         }, 
+         },
          error: (response) => {
           this.spinner.hide();
           this.snotifyService.error(response, {...environment.toastConfig,timeout:1000});
